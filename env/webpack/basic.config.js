@@ -1,8 +1,6 @@
 /**
  * Created by chenlei on 2018/5/29.
  */
-const fs = require('fs');
-const _ = require('lodash');
 const path = require('path');
 const webpack = require('webpack');
 const HtmLWebpackPlugin = require('html-webpack-plugin');
