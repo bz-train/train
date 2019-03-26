@@ -10,6 +10,7 @@ const history = require('connect-history-api-fallback');
 const app = express();
 const config = require('./webpack/webpack.dev');
 const pkg = require('../package.json');
+const Browser = require('./utils/openBrowser');
 const proxyOptions = {
     target: pkg.proxy,
     ws: true,
@@ -49,6 +50,10 @@ app.get('*', (req, res) => {
     res.end();
 });
 
-app.listen(8080, function () {
+app.listen(8080, function (err) {
+    if (err) {
+        return console.log(err);
+    }
     console.log('Example app listening on port 8080!\n');
+    Browser('http://localhost:8080/');
 });

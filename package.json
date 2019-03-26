@@ -4,7 +4,7 @@
   "description": "",
   "private": true,
   "scripts": {
-    "start": "node env/server.js",
+    "start": "node env/server.js --open",
     "build": "webpack --config env/webpack/webpack.pro.js"
   },
   "author": "",
