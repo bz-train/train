@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "target": "es5",
+    "lib": ["es6","dom"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "traceResolution":true,
+    "diagnostics":false,
+    "skipDefaultLibCheck":true,
+    "skipLibCheck":true,
+    "removeComments":true,
+    "baseUrl": "src",
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "@utils/*": ["utils/*"]
+    },
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "env"
+  ]
+}

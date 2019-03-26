@@ -1,0 +1,139 @@
+.o-login {
+  width:100%;
+  height:100vh;
+  background-image:url('../../assert/image/banner.jpg');
+  background-size:cover;
+  background-repeat:no-repeat;
+    .login-t {
+      .logo {
+        width:950px;
+        margin:0 auto;
+        padding:40px 40px 20px;
+        img {
+          width:80px;
+          height:80px;
+        }
+
+      }
+      .title{
+        width:950px;
+        margin:0 auto;
+        font-size: 28px;
+        color: #fff;
+        font-weight: 600;
+        padding:15px 0px;
+        text-align: center;
+      }
+    }
+
+    .login-c {
+      width:300px;
+      margin: 0 auto;
+      padding:28px 15px;
+      border-radius: 10px;
+      background-color:rgba(255,255,255,0.5);
+      position:static;
+
+      form {
+        position:relative;
+      }
+    }
+
+    .ant-form-item{
+      margin-bottom: 12px;
+    }
+
+    form{
+      .has-error .ant-input,.has-error .ant-input:focus{
+        box-shadow: none;
+        -webit-box-shadow:none;
+        -mos-box-shadow:none;
+      }
+      .has-error .ant-select-open,ant-select-selection,.has-error .ant-select-focused .ant-select-selection{
+        box-shadow: none;
+        -webit-box-shadow:none;
+        -mos-box-shadow:none;
+      }
+      input,input:focus,input:hover{
+        height: 44px;
+        border-top:0;
+        border-left:0;
+        border-right:0;
+        outline:none;
+        box-shadow: none;
+        -webit-box-shadow:none;
+        -mos-box-shadow:none;
+      }
+      .ant-select-search__field{
+        margin-top: -10px;
+      }
+      .ant-select-selection{
+        background:transparent;
+        border-top:0;
+        border-left:0;
+        border-right:0;
+        outline:none;
+        box-shadow: none;
+        -webit-box-shadow:none;
+        -mos-box-shadow:none;
+      }
+      button{
+        display: inline-block;
+        width: 100%;
+        height: 44px;
+        line-height: 42px;
+        line-height: 1.42857143;
+        text-align: center;
+        outline: none;
+        font-size: 18px;
+        background-image: linear-gradient(90deg, #269CFF 0%, #0E66FF 100%);
+        border-radius: 100px;
+        border: 1px solid #458fff;
+        color: #fff;
+        cursor: pointer;
+        margin-top: 25px;
+        &:hover{
+          //background: #2b80ff;
+          border: 1px solid #2b80ff;
+          span{
+            color: #fff;
+
+          }
+        }
+      }
+      .buttonClick{
+        box-shadow: 0 2px 4px 0 rgba(0,88,255,0.50);
+      }
+      .ant-input-group-wrapper{
+        border-radius:4px;
+        background-color:#fff;
+      }
+    }
+    .ant-input,.ant-input:hover,.ant-input:focus{
+      border-radius: 2px;
+      background-color:#fff;
+      background-color: rgb(255, 255, 255) !important;
+      background-image: none !important;
+      color:#333 !important;
+      -webkit-box-shadow: 0 0 0 1000px white inset;
+    }
+
+
+    .ant-input-group-addon{
+      color: #A5A5A5;
+      background: transparent;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-bottom-left-radius: 2px;
+    }
+    .ant-tabs-bar{
+      display: none;
+    }
+
+    .login-reg {
+      text-align:right;
+      cursor:pointer;
+      color:#0E66FF;
+    }
+}
