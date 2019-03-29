@@ -21,7 +21,6 @@ export default class Content extends Component<any,any> {
         }
     }
 
-
     add = (obj:any) => {
         this.setState({
             name:obj.name
@@ -35,7 +34,7 @@ export default class Content extends Component<any,any> {
     render() {
         return (
             <div className="o-home-content">
-                <Head  name = {this.state.name} />
+                <Head  name = {this.state.name} ref='Head' />
                 <List  a={this.state.a} add = {this.add} ref={(self) => { this.WrapList = self}} />
             </div>
         );
