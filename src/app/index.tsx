@@ -11,6 +11,7 @@ import {Redirect} from 'react-router'
 import { renderRoutes } from 'react-router-config'
 import Bundle from './Bundle'
 import {hot} from 'react-hot-loader'
+import './index.scss'
 
 const loggerMiddleware = createLogger()
 const history = createBrowserHistory();
