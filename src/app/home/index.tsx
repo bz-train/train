@@ -56,7 +56,7 @@ export default class Home extends Component<any,any> {
                     title:'用户管理',
                     icon: 'pie-chart'
                 }, {
-                    key:'sub3',
+                    key:'sub2',
                     title:'权限管理',
                     icon: 'inbox',
                     children:[{

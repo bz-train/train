@@ -1,3 +1,81 @@
 .o-home-content {
-
+   padding: 0px;
+   margin: 10px;
+   .top{
+       width: 50%;
+       height: auto;
+       margin: 0px;
+       float: left;
+       .inputs{
+           width: 160px;
+           margin-right: 30px
+       }
+       .centers{
+           margin-top: 15px;      
+           position: relative;    
+           .labels{
+               position: absolute;
+               top:10px;
+           }
+       }
+       
+       .selects{
+            width: 160px;
+            margin-left:74px;
+            height: 40px;
+        }
+        .ant-select-selection.ant-select-selection--single{
+            height: 40px;
+        }
+        .ant-select-selection-selected-value {
+            height: 40px;
+            line-height: 40px;
+        }
+      /*  .centers{
+           
+           position: relative;
+           height: 40px;
+           line-height: 40px;
+           .spans{
+               position: relative;
+               top: -11px;
+           }
+           .selects{
+            width: 160px;
+            height: 40px;
+            // margin-left: 71px;
+            margin-top: 10px;
+             padding: 0px 20px;
+            /* .left{
+                float: left;
+            }
+            .right{
+                float: right;
+            } 
+        }
+       }  */
+       
+   }
+   .right{
+        
+        float: right;
+        .searchs{
+            width: 100px;
+            height: 40px;
+            margin-right: 25px;
+        }
+        .addnew{
+            width: 100px;
+            height: 40px;
+        }
+        
+        
+    }
+    .clear{
+        clear: both;
+    }
+    .down{
+        
+        margin-top:40px;
+    }
 }
