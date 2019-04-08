@@ -1,4 +1,5 @@
 import React,{Component} from "react";
+import {Row,Col} from 'antd';
 
 class Head extends Component<any,any> {
 
@@ -11,8 +12,26 @@ class Head extends Component<any,any> {
     }
 
     render() {
+        let labelCol = {
+            xs:24,
+            md:12,
+            xl:6
+        }
+        let inputCol = {
+            xs:24,
+            md:12,
+            xl:6
+        }
         return(
-            <div className="head" >{this.props.name}</div>
+            <div className="train-head" >
+                <div className="head-title">{this.props.name}</div>
+                <Row type="flex" align='middle' >
+                    <Col >title1</Col>
+                    <Col >input1</Col>
+                    <Col >title2</Col>
+                    <Col >input2</Col>
+                </Row>
+            </div>
         );
     }
 }

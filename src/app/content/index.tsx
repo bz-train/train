@@ -12,6 +12,10 @@ console.log("aa>>>",aa);
 console.log("bb>>>",bb);
 
 export default class Content extends Component<any,any> {
+    static a ={
+
+    }
+
     constructor(props:any) {
         super(props);
 
