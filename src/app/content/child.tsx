@@ -2,8 +2,12 @@
  * Created by chenlei on 2018/7/12.
  */
 import React,{Component} from "react"
-import {Button} from 'antd';
+import {Button,Layout} from 'antd';
 import './index.scss'
+
+
+let {Header, Sider, Content, Footer} = Layout;
+
 
 interface Props {
     goUrl?: string;
@@ -64,9 +68,20 @@ export default class List extends Component<any,any> {
     }
 
     render() {
+
         let {list} = this.state;
         return (
             <div ref="content" className="o-home-content" {...this.props} >
+                <div>
+                    <Layout>
+                        <Header></Header>
+                        <Layout>
+                            <Sider></Sider>
+                            <Content></Content>
+                        </Layout>
+                        <Footer></Footer>
+                    </Layout>
+                </div>
                 <Button type="primary" onClick={this.addList}>添加列表</Button>
                 <ul>
                 {
