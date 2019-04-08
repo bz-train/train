@@ -23,7 +23,7 @@ var Content = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Content.prototype.render = function () {
-        return (React.createElement("div", { className: "o-home-content" }, "content"));
+        return (React.createElement("div", { className: "o-home-content1" }, "content"));
     };
     return Content;
 }(Component));
