@@ -18,46 +18,6 @@ export const aa = 'aaa'
 export const bb = function () {
 
 }
-
-/*
-var / let
-
-const
-
-es5
-
-bind()
-() => {}
-
-let obj = {
-a,
-b
-}
-
-obj1 =
-
-let a = "a"+ obj.a
-let a = `a${obj.a}`;
-
-map
-set
-promise
-
-['a','b']
-for
-map
-forEach
-for in  对象
-for of
-
-filter
-findIndex
-
-*/
-
-
-
-
 export default class List extends Component<any,any> {
     static defaultProps = {
         name:'pt'

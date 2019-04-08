@@ -16913,7 +16913,9 @@ textarea.ant-mention-wrapper .ant-mention-editor {
 .ant-modal-footer button + button {
   margin-left: 8px;
   margin-bottom: 0;
+  text-align-all: center;
 }
+
 .ant-modal.zoom-enter,
 .ant-modal.zoom-appear {
   -webkit-animation-duration: 0.3s;

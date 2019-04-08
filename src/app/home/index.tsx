@@ -29,7 +29,7 @@ const Root = (props: any) => {
         )
     }else {
         return (
-            <div>无对应的页面</div>
+            <div>无对应页面</div>
         )
     }
 
