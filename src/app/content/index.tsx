@@ -185,27 +185,20 @@ export default class Content extends Component<any,any> {
                         />
                         {/*dataSource：表格数据源*/}
                         {/*只有当visiable为true的时候，才引入modal，因为model不会自动清空数据*/}
-                        <div>
+                        <div className="bottom-modal">
                             {this.state.visible?
                                 <Modal
                                     title="新增根级功能"
                                     visible={this.state.visible}
                                     onOk={this.handleOk}
                                     onCancel={this.handleCancel}
-                                    footer={[
-                                        <div style={{textAlign: 'center'}}>
-                                            <Button key="back" onClick={this.handleCancel}>取消</Button>,
-                                            <Button key="submit" type="primary" loading={this.state.loading} onClick={this.handleOk}>
-                                                新增
-                                            </Button>
-                                        </div>
-                                    ]}
+                                    okText="新增"
+                                    cancelText="取消"
                                 >
                                     {/*// 嵌入表单组件*/}
                                     <AddFun ref="addFunDate"/>
                                 </Modal>: ""}
                         </div>
-
                     </div>
                 </div>
             </div>
