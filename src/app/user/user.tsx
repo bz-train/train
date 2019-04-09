@@ -6,7 +6,7 @@ import {Component} from "react"
 import {Form, Input,Select, Icon, message,Modal,
       Button,Table,Alert,DatePicker, 
 } from 'antd'
-import './css.scss'
+import './user.scss'
 
 const FormItem = Form.Item;
 const Option = Select.Option;

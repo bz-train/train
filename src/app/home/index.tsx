@@ -21,7 +21,7 @@ const routes: any[] = [
         lazyComponent: './role/index',
     },
     {
-        path: '/home/user',
+        path: '/home/users',
         lazyComponent: './user/user',
     }
 ]
@@ -45,7 +45,7 @@ export default class Home extends Component<any,any> {
                         key:'/home/role'
                },{
                    title:'用户管理',
-                   key:'/home/user'
+                   key:'/home/users'
                }]
             }]
         }
