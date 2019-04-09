@@ -8,7 +8,7 @@ import {Provider} from 'react-redux'
 import {ConnectedRouter,routerReducer, routerMiddleware,push} from 'react-router-redux'
 import {createLogger} from 'redux-logger'
 import {Redirect} from 'react-router'
-import { renderRoutes } from 'react-router-config'
+import {renderRoutes} from "./router";
 import Bundle from './Bundle'
 import {hot} from 'react-hot-loader'
 
@@ -43,78 +43,33 @@ store.subscribe(() =>
 
 store.dispatch({type: 'INCREMENT'});
 
-
-const Root = (props: any) => {
-    console.log("props>>>",props);
-    let key=props.location.pathname;
-    const routes = props.route.routes;
-    let name=localStorage.getItem('name');
-    routes.forEach((item: any) => {
-        if(item.auth){
-            if(name) {
-                item.component =  () => {
-                    const path=`${item.lazyComponent}`
-                    return <Bundle  {...props}  goUrl={path} />
-                }
-            }
-            else {
-                item.component = () => {
-                    return <Redirect from="/home" to="/" />
-                }
-            }
-        }else {
-            if(name) {
-                item.component = () => {
-                    return <Redirect from="/login" to="/home" />
-                }
-            }else {
-                item.component =  () => {
-                    const path=`${item.lazyComponent}`
-                    return <Bundle  {...props} goUrl={path} />
-                }
-            }
-        }
-    });
-
-    return (
-        <div className="o-c-ass">
-            {renderRoutes(routes)}
-        </div>
-    )
-}
-
 const routes: any[] = [
+    {   path: '/',
+        exact: true,
+        lazyComponent: './login/index'
+    },
     {
-        component: Root,
-        routes: [
-            {   path: '/',
-                exact: true,
-                lazyComponent: './login/index'
-            },
-            {
-                path: '/login',
-                lazyComponent: './login/index',
-            },
-            {
-                path: '/register',
-                lazyComponent: './register/index',
-            },
-            {
-                path: '/home',
-                auth: true,
-                lazyComponent: './home/index',
-            }
-        ]
+        path: '/login',
+        lazyComponent: './login/index',
+    },
+    {
+        path: '/register',
+        lazyComponent: './register/index',
+    },
+    {
+        path: '/home',
+        lazyComponent: './home/index',
     }
 ]
 
 export class App extends Component {
     render() {
-        console.log("this.props",this.props);
         return (
             <Provider store={store}>
                 <ConnectedRouter history={history}>
-                    {renderRoutes(routes)}
+                    <div className="o-c-ass">
+                        {renderRoutes(routes)}
+                    </div>
                 </ConnectedRouter>
             </Provider>
         );

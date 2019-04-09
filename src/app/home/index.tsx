@@ -4,46 +4,27 @@
 import * as React from "react"
 import { Component } from "react"
 import { Menu, Icon, Button } from 'antd';
-import Bundle from '../Bundle'
-import { renderRoutes } from 'react-router-config'
+import {renderRoutes} from "../router";
 
 import './index.scss'
 
 const SubMenu = Menu.SubMenu;
 
-
-const Root = (props: any) => {
-    let key=props.location.pathname;
-    let routes = props.route.routes;
-    let index = routes.findIndex((item:any) => item.path==key);
-    if(index!==-1){
-        let item = routes[index];
-        item.component =  () => {
-            const path=`${item.lazyComponent}`
-            return <Bundle {...props} goUrl={path} />
-        }
-        return (
-            <div className="o-home-content">
-                {renderRoutes([item])}
-            </div>
-        )
-    }else {
-        return (
-            <div>无对应的页面</div>
-        )
+const routes: any[] = [
+    {
+        path: '/home',
+        exact: true,
+        lazyComponent: './content/index',
+    },
+    {
+        path: '/home/role',
+        lazyComponent: './role/index',
+    },
+    {
+        path: '/home/user',
+        lazyComponent: './user/user',
     }
-
-}
-
-const routes: any[] = [{
-    component:Root,
-    routes:[
-        {
-            path: '/home',
-            lazyComponent: './content/index',
-        }
-    ]
-}]
+]
 
 export default class Home extends Component<any,any> {
     constructor(props:any) {
@@ -56,16 +37,18 @@ export default class Home extends Component<any,any> {
                     title:'用户管理',
                     icon: 'pie-chart'
                 }, {
-                    key:'sub2',
+                    key:'sub3',
                     title:'权限管理',
                     icon: 'inbox',
                     children:[{
-                        key:'/home/auth'
-                    }]
-                }]
+                        title:'角色管理',
+                        key:'/home/role'
+               },{
+                   title:'用户管理',
+                   key:'/home/user'
+               }]
+            }]
         }
-
-
     }
 
     toggleCollapsed = () => {
