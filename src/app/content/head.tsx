@@ -1,22 +1,39 @@
-import React from 'react'
+import React,{Component} from "react";
+import {Row,Col} from 'antd';
 
-interface ReactProps {
-    form?:any;
-}
-export default class Head extends React.Component<ReactProps,any> {
-    constructor(props:any){
+class Head extends Component<any,any> {
 
+    constructor(props:any) {
         super(props);
+
         this.state = {
 
-    }
+        }
     }
 
     render() {
-
-        return (
-           <div></div>
+        let labelCol = {
+            xs:24,
+            md:12,
+            xl:6
+        }
+        let inputCol = {
+            xs:24,
+            md:12,
+            xl:6
+        }
+        return(
+            <div className="train-head" >
+                <div className="head-title">{this.props.name}</div>
+                <Row type="flex" align='middle' >
+                    <Col >title1</Col>
+                    <Col >input1</Col>
+                    <Col >title2</Col>
+                    <Col >input2</Col>
+                </Row>
+            </div>
         );
     }
 }
 
+export default Head;

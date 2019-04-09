@@ -4,46 +4,23 @@
 import * as React from "react"
 import { Component } from "react"
 import { Menu, Icon, Button } from 'antd';
-import Bundle from '../Bundle'
-import { renderRoutes } from 'react-router-config'
+import {renderRoutes} from "../router";
 
 import './index.scss'
 
 const SubMenu = Menu.SubMenu;
 
-
-const Root = (props: any) => {
-    let key=props.location.pathname;
-    let routes = props.route.routes;
-    let index = routes.findIndex((item:any) => item.path==key);
-    if(index!==-1){
-        let item = routes[index];
-        item.component =  () => {
-            const path=`${item.lazyComponent}`
-            return <Bundle {...props} goUrl={path} />
-        }
-        return (
-            <div className="o-home-content">
-                {renderRoutes([item])}
-            </div>
-        )
-    }else {
-        return (
-            <div>无对应页面</div>
-        )
+const routes: any[] = [
+    {
+        path: '/home',
+        exact: true,
+        lazyComponent: './content/index',
+    },
+    {
+        path: '/home/role',
+        lazyComponent: './role/index',
     }
-
-}
-
-const routes: any[] = [{
-    component:Root,
-    routes:[
-        {
-            path: '/home',
-            lazyComponent: './content/index',
-        }
-    ]
-}]
+]
 
 export default class Home extends Component<any,any> {
     constructor(props:any) {
@@ -54,21 +31,17 @@ export default class Home extends Component<any,any> {
                 {
                     key: '/home/user',
                     title:'用户管理',
-                    icon: 'pie-chart',
-                    children:[{
-                        key:'/home/auth',
-                        //icon: 'pie-chart',
-                        title:'新增用户',
-                    }]
+                    icon: 'pie-chart'
                 }, {
                     key:'sub3',
                     title:'权限管理',
                     icon: 'inbox',
-
+                    children:[{
+                        title:'角色管理',
+                        key:'/home/role'
                 }]
+            }]
         }
-
-
     }
 
     toggleCollapsed = () => {
