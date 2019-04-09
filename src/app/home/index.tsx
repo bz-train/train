@@ -11,7 +11,7 @@ import './index.scss'
 
 const SubMenu = Menu.SubMenu;
 
-
+// 懒加载函数封装。
 const Root = (props: any) => {
     let key=props.location.pathname;
     let routes = props.route.routes;
@@ -41,6 +41,10 @@ const routes: any[] = [{
         {
             path: '/home',
             lazyComponent: './content/index',
+        },
+        {
+            path: '/home/scopeControl',
+            lazyComponent: './scopeControl/index',
         }
     ]
 }]
@@ -59,10 +63,14 @@ export default class Home extends Component<any,any> {
                     key:'sub3',
                     title:'权限管理',
                     icon: 'inbox',
-                    children:[{
-                        key:'/home/auth'
-                    }]
-                }]
+                    children:[
+                    {
+                        key: '/home/scopeControl',
+                        title: '权限页面',
+                        icon: 'table'
+                    }
+                    ]
+                },]
         }
 
 

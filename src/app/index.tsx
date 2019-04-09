@@ -39,7 +39,7 @@ const store = createStore(
 console.log('store>>>>>', store);
 
 store.subscribe(() =>
-    console.log(store.getState())
+    console.log(111)
 );
 
 store.dispatch({type: 'INCREMENT'});

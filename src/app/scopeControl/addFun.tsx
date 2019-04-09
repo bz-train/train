@@ -60,25 +60,36 @@ class AddFun extends Component<any,any> {
                         {...tailFormItemLayout}
                         label="功能URL地址："
                     >
-                        <Input className="addInput" placeholder="请输入URL地址"/>
+                        {getFieldDecorator ('urlInfo')(
+                            <Input className="addInput"  placeholder="请输入URL地址"/>
+                        )}
                     </Form.Item>
                     <Form.Item
                         {...tailFormItemLayout}
                         label="图标："
                     >
-                        <Input className="addInput" placeholder="请输入图标名称"/>
+                        {getFieldDecorator ('icon')(
+                            <Input className="addInput" placeholder="请输入图标名称"/>
+                        )}
                     </Form.Item>
                     <Form.Item
                         {...tailFormItemLayout}
                         label="排序索引："
                     >
-                        <Input className="addInput" placeholder="请输入排序索引"/>
+                        {getFieldDecorator ('sortUse')(
+                            <Input className="addInput" placeholder="请输入排序索引"/>
+                        )}
                     </Form.Item>
                     <Form.Item
                         {...tailFormItemLayout}
                         label="URL跳转方式："
                     >
-                        <Input className="addInput" value="GET"/>
+                        {getFieldDecorator ('methodType',{
+                            // 设置input默认值
+                            initialValue:"GET"
+                        })(
+                            <Input className="addInput" />
+                        )}
                     </Form.Item>
                 </Form>
             </div>

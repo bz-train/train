@@ -1,0 +1,43 @@
+.home-content {
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  .content-box {
+    width: 90%;
+    margin: auto;
+    .content-top {
+      padding-top: 50px;
+      &:after {
+        content:"";
+        clear: both;
+        height: 0;
+        overflow: hidden;
+        visibility: hidden;
+        display: block;
+      }
+      .content-input {
+        float: left;
+      }
+      .content-add {
+        float: right;
+        .content-add_btn{
+          margin-right: 20px;
+        }
+      }
+    }
+    .content-bottom {
+      margin-top: 20px;
+      .bottom-modal {
+        .ant-modal-footer {
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+
+.ant-input-sm {
+  width: 200px;
+  height: 32px;
+}
