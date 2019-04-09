@@ -4,11 +4,8 @@
 import React,{Component} from "react"
 import {Table, Divider,Modal,Button} from 'antd'
 import './index.scss'
-import List, {aa,bb} from './child'
 import Head from './head'
 import '../index.scss'
-console.log("aa>>>",aa);
-console.log("bb>>>",bb);
 
 export default class Content extends Component<any,any> {
     constructor(props: any) {
@@ -121,10 +118,14 @@ export default class Content extends Component<any,any> {
                     title="新增"
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
-                    okText="创建"
-                    cancelText="取消"
+                    footer={[
+                        <Button key="back" onClick={this.handleCancel}>取消</Button>,
+                        <Button key="submit" type="primary" loading={loading} onClick={this.handleOk}>
+                            创建
+                        </Button>,
+                    ]}
                 >
-                    <Head/>
+                    <Head />
                 </Modal>
             </div>
         );

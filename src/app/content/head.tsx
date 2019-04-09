@@ -1,40 +1,47 @@
-import React from "react";
-import {DatePicker,Form, Input, Select,} from 'antd';
-const { Option } = Select;
+import React from 'react'
+import {Form, Input,DatePicker, Select,} from 'antd';
+const Option = Select.Option;
+//const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
+function onChange(date:any, dateString:any) {
+    console.log(date, dateString);
+}
+function handleChange(value:any){
+    console.log(`selected ${value}`);
+    this.props.form.validateFieldsAndScroll((err:any, values:any) => {
+        if (!err) {
+            console.log('Received values of form: ', values);
+        }
+    });
+}
 
-class Head extends React.Component {
-    constructor(props: any) {
+function handleBlur() {
+    console.log('blur');
+}
+function handleFocus() {
+    console.log('focus');
+}
+interface ReactProps {
+    form?:any;
+}
+class Head extends React.Component<ReactProps,any> {
+    constructor(props:any){
+
         super(props);
         this.state = {
             confirmDirty: false,
-            autoCompleteResult: [],
-        };
+            //       autoCompleteResult:[],
     }
+    };
 
     handleSubmit = (e:any) => {
         e.preventDefault();
-        this.props.form.validateFieldsAndScroll((err:any, values:any) => {
-            if (!err) {
-                console.log('Received values of form: ', values);
-            }
-        });
-    }
+    };
 
-    dateChange = (date:any, dateString:any) => {
-        console.log(date, dateString)
-    }
-    handleChange = (value:any) => {
-        console.log(`selected ${value}`);
-    }
-    handleBlur=()=> {
-        console.log('blur');
-    }
-    handleFocus=()=> {
-        console.log('focus');
-    }
+    render() {
+        console.log(this.props);
+        const { getFieldDecorator } =this.props.form;
 
-    render(){
-        const { getFieldDecorator } = this.props.form;
+
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
@@ -46,115 +53,100 @@ class Head extends React.Component {
             },
         };
 
+        return (
+            <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+                <Form.Item
+                    label="角色编码"
+                >
+                    {getFieldDecorator('rnumber', {
+                        rules: [{
+                            required: true, message: '不能为空',
+                        }],
+                    })(
+                        <Input placeholder="请输入角色业务编码"/>
+                    )}
+                </Form.Item>
 
+                <Form.Item
+                    label="角色名称"
+                >
+                    {getFieldDecorator('rname', {
+                        rules: [{
+                            required: true, message: '不能为空',
+                        }],
+                    })(
+                        <Input placeholder="请输入角色业名称(英文)"/>
+                    )}
+                </Form.Item>
 
-        return(
-            <div>
-                <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-                    <Form.Item
-                        label="角色编码"
-                    >
-                        {getFieldDecorator('rnumber', {
-                            rules: [
-                               {
-                                required: true, message: '不能为空!',
-                            }],
-                        })(
-                            <Input placeholder="请输入角色业务编码"/>
-                        )}
-                    </Form.Item>
+                <Form.Item
+                    label="角色类型"
+                >
+                    {getFieldDecorator('rtype', {
+                        rules: [{
+                            required: true, message: '不能为空',
+                        }],
+                    })(
+                        <Select
+                            showSearch
+                            optionFilterProp="children"
+                            onChange={handleChange}
+                            onFocus={handleFocus}
+                            onBlur={handleBlur}
+                            filterOption={(input:any, option:any) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                        >
+                            <Option value="类型1">类型1</Option>
+                            <Option value="类型2">类型2</Option>
+                            <Option value="类型3">类型3</Option>
+                        </Select>
+                    )}
+                </Form.Item>
 
-                    <Form.Item
-                        label="角色名称"
-                    >
-                        {getFieldDecorator('rname', {
-                            rules: [
-                                {
-                                    required: true, message: '不能为空!',
-                                }],
-                        })(
-                            <Input placeholder="请输入角色名称(英文)"/>
-                        )}
-                    </Form.Item>
+                <Form.Item
+                    label="是否系统角色"
+                >
+                    {getFieldDecorator('yorn', {
+                        rules: [{
+                            required: true, message: '不能为空',
+                        }],
+                    })(
+                        <Select
+                            showSearch
+                            optionFilterProp="children"
+                            onChange={handleChange}
+                            onFocus={handleFocus}
+                            onBlur={handleBlur}
+                            filterOption={(input:any, option:any) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                        >
+                            <Option value="是">是</Option>
+                            <Option value="否">否</Option>
+                        </Select>
+                    )}
+                </Form.Item>
 
-                    <Form.Item
-                        label="角色类型" className="iconselect"
-                    >
-                        {getFieldDecorator('rtype', {
-                            rules: [
-                                {
-                                    required: true, message: '不能为空!',
-                                }],
-                        })(
-                            <Select
-                                showSearch
-                                style={{ width: 315 }}
-                                optionFilterProp="children"
-                                onChange={this.handleChange}
-                                onFocus={this.handleFocus}
-                                onBlur={this.handleBlur}
-                                filterOption={(input, option) =>
-                                    option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                            >
-                                <Option value="0">类型1</Option>
-                                <Option value="1">类型2</Option>
-                                <Option value="2" disabled>类型3</Option>
-                                <Option value="3">类型4</Option>
-                            </Select>
-                        )}
-                    </Form.Item>
+                <Form.Item
+                    label="信息说明"
+                >
+                    {getFieldDecorator('msg', {
+                        rules: [{
+                            required: true, message: '不能为空',
+                        },
+                        ],
+                    })(
+                        <Input placeholder="请填写角色信息说明"/>
+                    )}
+                </Form.Item>
 
-                    <Form.Item
-                        label="是否系统角色"
-                    >
-                        {getFieldDecorator('rsys', {
-                            rules: [
-                                {
-                                    required: true, message: '不能为空!',
-                                }],
-                        })(
-                            <Select
-                                showSearch
-                                style={{ width: 315 }}
-                                optionFilterProp="children"
-                                onChange={this.handleChange}
-                                onFocus={this.handleFocus}
-                                onBlur={this.handleBlur}
-                                filterOption={(input, option) =>
-                                    option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                            >
-                                <Option value="0">是</Option>
-                                <Option value="1">否</Option>
-                            </Select>
-                        )}
-                    </Form.Item>
+                <Form.Item
+                    label="创建时间"
+                >
+                    <DatePicker onChange={onChange} style={{ width: 315 }}
+                                placeholder="请选择创建时间"/>
+                </Form.Item>
 
-                    <Form.Item
-                        label="信息说明"
-                    >
-                        {getFieldDecorator('rmsg', {
-                            rules: [
-                                {
-                                    required: true, message: '不能为空!',
-                                }],
-                        })(
-                            <Input placeholder="请填写角色信息说明"/>
-                        )}
-                    </Form.Item>
-
-                    <Form.Item
-                        label="创建时间"
-                    >
-                        {getFieldDecorator('rtime', {
-                            rules: [],
-                        })(
-                            <DatePicker onChange={this.dateChange} className="data-t-day"/>
-                        )}
-                    </Form.Item>
-                </Form>
-
-            </div>
+            </Form>
         );
     }
 }
+
 export default Form.create()(Head);
