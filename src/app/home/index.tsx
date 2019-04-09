@@ -4,7 +4,7 @@
 import * as React from "react"
 import { Component } from "react"
 import { Menu, Icon, Button } from 'antd';
-import {renderRoutes,matchRoutes} from "../router";
+import {renderRoutes} from "../router";
 
 import './index.scss'
 
