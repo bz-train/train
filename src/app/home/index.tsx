@@ -54,14 +54,17 @@ export default class Home extends Component<any,any> {
                 {
                     key: '/home/user',
                     title:'用户管理',
-                    icon: 'pie-chart'
+                    icon: 'pie-chart',
+                    children:[{
+                        key:'/home/auth',
+                        //icon: 'pie-chart',
+                        title:'新增用户',
+                    }]
                 }, {
                     key:'sub3',
                     title:'权限管理',
                     icon: 'inbox',
-                    children:[{
-                        key:'/home/auth'
-                    }]
+
                 }]
         }
 
