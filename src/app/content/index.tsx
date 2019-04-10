@@ -34,6 +34,9 @@ class Content extends Component<any,any> {
 
     componentDidMount() {
         this.WrapList.addList();
+        this.props.actions.getContent(function(data:any[]) {
+            console.log(data);
+        });
     }
 
     changeHead = () => {
