@@ -19,6 +19,10 @@ const routes: any[] = [
     {
         path: '/home/role',
         lazyComponent: './role/index',
+    },
+    {
+        path: '/home/scopeControl',
+        lazyComponent: './scopeControl/index',
     }
 ]
 
@@ -39,7 +43,12 @@ export default class Home extends Component<any,any> {
                     children:[{
                         title:'角色管理',
                         key:'/home/role'
-                }]
+                    },
+                        {
+                            title:'权限菜单',
+                            key:'/home/scopeControl'
+                        }
+                    ]
             }]
         }
     }

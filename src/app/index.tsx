@@ -32,6 +32,7 @@ export class App extends Component {
     render() {
         console.log("store>>>>",store);
         return (
+            // 传递store里面的state  Provider  --它包裹下的组件都可以拿到state
             <Provider store={store}>
                 <ConnectedRouter history={history}>
                     <div className="o-c-ass">

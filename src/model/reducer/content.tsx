@@ -10,6 +10,7 @@ function Content(state = initState, action:any) {
     switch (action.type) {
         case ADD_CONNENT:
             return Object.assign({}, state, {
+                // 改变state的title值
                 title: action.title
             })
         default:

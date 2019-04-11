@@ -5,62 +5,17 @@ import React,{Component} from "react"
 import { Button, Input, Table, Badge, Menu, Dropdown, Icon, Modal } from 'antd'
 import './index.scss';
 import AddFun from './addFun';
+ import { connect } from 'react-redux';
+ // import { del } from '../../model/action/scopeControl';
 
 
-export default class Content extends Component<any,any> {
+class scopeControl extends Component<any,any> {
     constructor(props:any) {
         super(props);
         this.state = {
             name: '',
             visible: false,
             loading: false,
-            data: [
-                {
-                    key: 1,
-                    name: '首页',
-                    urlInfo: '/',
-                    methodType: 'get',
-                    createTime: '2019/04/03',
-                    changeTime: '2019/04/03',
-                    funRemark: '首页',
-                },
-                {
-                    key: 2,
-                    name: '首页',
-                    urlInfo: '/',
-                    methodType: 'get',
-                    createTime: '2019/04/03',
-                    changeTime: '2019/04/03',
-                    funRemark: '用户与授权',
-                },
-                {
-                    key: 3,
-                    name: '首页',
-                    urlInfo: '/',
-                    methodType: 'get',
-                    createTime: '2019/04/03',
-                    changeTime: '2019/04/03',
-                    funRemark: '功能与角色',
-                },
-                {
-                    key: 4,
-                    name: '首页',
-                    urlInfo: '/template',
-                    methodType: 'get',
-                    createTime: '2019/04/03',
-                    changeTime: '2019/04/03',
-                    funRemark: '表单模板管理',
-                },
-                {
-                    key: 5,
-                    name: '首页',
-                    urlInfo: '/template',
-                    methodType: 'get',
-                    createTime: '2019/04/03',
-                    changeTime: '2019/04/03',
-                    funRemark: '表单实例管理',
-                },
-            ], // 表头数据
             columns: [ // 列数据描述对象
                 { title: '功能名', dataIndex: 'name', key: 'name' },
                 { title: 'URL信息', dataIndex: 'urlInfo', key: 'urlInfo' },
@@ -76,7 +31,6 @@ export default class Content extends Component<any,any> {
                             <Icon type="delete" style={{color: 'red'}}/><a href="javascript:;" data-index={index} onClick={this.delCol} style={{color: "red"}}>删除</a>
                         </span> },
             ]
-
         }
     }
 
@@ -91,19 +45,20 @@ export default class Content extends Component<any,any> {
     handleOk = () => {
         // 获取form表单元素
         let addFunDate = this.refs.form;
-        addFunDate.validateFields((err,value) => {
+        addFunDate.validateFields((err: any, value: any) => {
             if (!err) {
                 let formData = value;
-                let data = this.state.data;
+                let data = this.props.data;
                 formData.createTime = '2019/04/03';
                 formData.changeTime = '2019/04/03';
                 formData.funRemark = '权限管理';
                 formData.key = data.length+1;
                 data.push(formData);
-                this.setState({
-                    data,
-                    visible: false,
-                })
+                this.props.addData(data)
+                // this.setState({
+                //     data,
+                //     visible: false,
+                // })
             }
         })
         // console.log(addFunDate)
@@ -117,13 +72,13 @@ export default class Content extends Component<any,any> {
     }
 
     // 删除函数
-    delCol = (e) => {
-        let data = this.state.data;
-        console.log(e.target.getAttribute('data-index'))
+    delCol = (e: any) => {
+        let data = this.props.data;
         data.splice(e.target.getAttribute('data-index'),1);
-        this.setState({
-            data
-        })
+        // this.setState({
+        //     data
+        // })
+        this.props.delDispatch(data)
     }
 
     // // 额外的展开行函数
@@ -197,15 +152,14 @@ export default class Content extends Component<any,any> {
                         <Table
                             className="components-table-demo-nested"
                             columns={this.state.columns}
-                            expandedRowRender={this.expandedRowRender}
-                            dataSource={this.state.data}
+                            // expandedRowRender={this.expandedRowRender}
+                            dataSource={this.props.data}
                             rowKey={record => record.key}
                             // pagination={{
                             //     pageSize: 3, // 一页显示条数
                             //     total: this.state.columns.key,
                             //     showSizeChanger: true, //是否显示可以设置几条一页
                             // }}
-
                         />
                         {/*dataSource：表格数据源*/}
                         {/*只有当visiable为true的时候，才引入modal，因为model不会自动清空数据*/}
@@ -229,9 +183,36 @@ export default class Content extends Component<any,any> {
                                 </Modal>: ""}
                         </div>
                     </div>
-
                 </div>
             </div>
         );
     }
 }
+const mapStateToProps = (state: any) => {
+    // state.control 因为这是多个reducer合成的（拿数据要小心）
+    return {
+        data: state.control.data,
+        columns: state.control.columns
+    }
+}
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        delDispatch: (data: any) => {
+            const action = {
+                type: 'del_tableData',
+                data
+            }
+            dispatch(action)
+        },
+        addData: (data: any) => {
+            const action = {
+                type: 'add_form_data',
+                data
+            }
+            dispatch(action)
+        }
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(scopeControl)
