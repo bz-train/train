@@ -1,4 +1,4 @@
-import { DEL_TABLEDATA } from '../action/scopeControl';
+import { DEL_TABLEDATA,ADD_FORM_DATA } from '../action/scopeControl';
 import { Icon, Button} from 'antd';
 import React from 'react'
 
@@ -55,16 +55,33 @@ const tableData = {
 //添加内容列表
 function scopeControl(state = tableData, action:any) {
     switch (action.type) {
-        case DEL_TABLEDATA:
+        case DEL_TABLEDATA : {
+            let data = state.data;
+            let index = data.findIndex((item:any) => item.key == action.id);
+            if(index > -1) {
+                data.splice(index,1);
+            }
             return Object.assign({}, state, {
                 // 后面的action.data 会覆盖state里面的data属性
-                data: action.data // 获取了action里面的data值
-            })
-        case 'add_form_data':
+                data: data
+            });
+            break;
+        }
+        case ADD_FORM_DATA: {
+            let data = state.data;
+            let index = data.findIndex((item:any) => item.key == action.id);
+            if(index > -1) {
+                data[index] = action.data;
+            }
+            else {
+                data.push(action.data);
+            }
             return Object.assign({}, state, {
                 // 后面的action.data 会覆盖state里面的data属性
-                data: action.data // 获取了action里面的data值
-            })
+                data: data
+            });
+            break;
+        }
         default:
             return state
     }

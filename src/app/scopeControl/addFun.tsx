@@ -2,9 +2,13 @@
  * Created by chenlei on 2018/7/12.
  */
 import React,{Component} from "react";
-import {Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete,} from 'antd';
+import {Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete, Modal,} from 'antd';
 import './addFun.scss';
 import 'antd/dist/antd.css';
+import {connect} from "react-redux";
+import { bindActionCreators } from 'redux'
+
+import * as ScopeControl from "../../model/action/scopeControl";
 
 class AddFun extends Component<any,any> {
     constructor(props: any) {
@@ -20,6 +24,30 @@ class AddFun extends Component<any,any> {
     getItemsValue = () => {
         let value = this.props.form.getFieldsValue();
         return value;
+    }
+
+    // modal取消
+    handleCancel = () => {
+        this.setState({
+            visible: false,
+        });
+    }
+
+
+    // modal确认
+    handleOk = () => {
+        // 获取form表单元素
+        this.props.form.validateFields((err: any, value: any) => {
+            if (!err) {
+                let data = this.props.data;
+                let formData = value;
+                formData.createTime = '2019/04/03';
+                formData.changeTime = '2019/04/03';
+                formData.funRemark = '权限管理';
+                formData.key = data.length + 1;
+                this.props.addList(formData);
+            }
+        })
     }
 
     // 数据
@@ -43,6 +71,19 @@ class AddFun extends Component<any,any> {
         const { getFieldDecorator }=this.props.form;
         const { form: { validateFields } } = this.props;
         return (
+            <Modal
+                title={this.props.title}
+                visible={this.props.visible}
+                onCancel={this.handleCancel}
+                footer={[
+                    <div style={{textAlign: 'center'}}>
+                        <Button key="back" onClick={this.handleCancel}>取消</Button>,
+                        <Button key="submit" type="primary" onClick={this.handleOk}>
+                            新增
+                        </Button>
+                    </div>
+                ]}
+            >
             <div className="content">
                 <Form
                 >
@@ -93,6 +134,7 @@ class AddFun extends Component<any,any> {
                     </Form.Item>
                 </Form>
             </div>
+        </Modal>
         );
     }
 }
