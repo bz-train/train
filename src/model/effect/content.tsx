@@ -5,7 +5,7 @@ import * as API from '../api/content'
 export function* getContentList() {
     while (true) {
         const action = yield take(Actions.GET_CONNENT)
-        yield call(API.getContentList,action)
+        let result = yield call(API.getContentList,action)
     }
 }
 
