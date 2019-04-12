@@ -53,52 +53,40 @@ class User extends Component<any,any> {
       }
 
       handleOk = () => {
-        console.log('modal 点击了ok事件')
-        let forms = this.refs.getFormValue
-        forms.validateFields((err:any, values:any) => {
+            console.log('modal 点击了ok事件')
+            let forms = this.refs.getFormValue
+            forms.validateFields((err:any, values:any) => {
 
-          console.log('this.state.formTime'+this.state.formTime)
-          if(!err){ //&& this.state.formTime!=''
-            console.log(values);//这里可以拿到数据
-            let data = values; 
-            data.time = '2019/03/23'  //入职时间
-            data.lastLogintime = '2019/3/27' //最后登录时间
-            data.creatTime = this.state.formTime; //创建时间
-            data.number = 2 //序号
-            data.status = ['正常', '禁用'] //状态
-
-            this.props.actions(
-              // type:'add_user',
-              data     
-              )
-             console.log('this.props.state'+typeof this.props.state)
-         
-            var userx = JSON.stringify(this.props.state)
-            console.log('userx'+userx)
-            this.setState({
-              array:this.state.array.concat(this.props.state)
-            },
-            function () {
-              console.log('array'+JSON.stringify(this.state.array))
+              console.log('this.state.formTime'+this.state.formTime)
+              if(!err){ //&& this.state.formTime!=''
+                console.log(values);//这里可以拿到数据
+                let data = values; 
+                data.time = '2019/03/23'  //入职时间
+                data.lastLogintime = '2019/3/27' //最后登录时间
+                data.creatTime = this.state.formTime; //创建时间
+                console.log('this.props.state.length'+this.props.state.length)
+                data.number = this.props.state.length+1 //序号
+                data.status = ['正常', '禁用'] //状态
+                this.props.actions(
+                  // type:'add_user',
+                   data     
+                )
+              }
             })
+            this.setState({
+              ModalText: 'The modal will be closed after two seconds',
+              confirmLoading: true,
+            });
+            setTimeout(() => {
+              this.setState({
+                visible: false,
+                confirmLoading: false,
+              });
+            }, 2000);
+          
           }
-        })
-
-        this.setState({
-          ModalText: 'The modal will be closed after two seconds',
-          confirmLoading: true,
-        });
-        setTimeout(() => {
-          this.setState({
-            visible: false,
-            confirmLoading: false,
-          });
-        }, 2000);
-      
-      }
 
       handleCancel = () => {
-        console.log('Clicked cancel button');
         this.setState({
           visible: false,
         });
@@ -117,8 +105,6 @@ class User extends Component<any,any> {
 
     
     render() {
-     
-      console.log('this.props.state'+JSON.stringify(this.props.state))
 
         //定义表格
         const columns = [{
