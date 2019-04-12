@@ -25,3 +25,13 @@ export function addToUser(data:any){
     }
 }
 
+//删除user里的一行数据
+export const REMOVE_USER = 'REMOVE_USER'
+export function removeUser(index:any){
+    return {
+        type:REMOVE_USER,
+        index
+    }
+}
+
+

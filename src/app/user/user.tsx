@@ -4,7 +4,7 @@
 import * as React from "react"
 import {Component} from "react"
 import {Form, Input,Select, Icon, message,Modal,
-      Button,Table,Alert,DatePicker, 
+      Button,Table,Alert,DatePicker,Menu, Dropdown 
 } from 'antd'
 import FormNow from './form'
 import './user.scss'
@@ -64,12 +64,12 @@ class User extends Component<any,any> {
                 data.time = '2019/03/23'  //入职时间
                 data.lastLogintime = '2019/3/27' //最后登录时间
                 data.creatTime = this.state.formTime; //创建时间
-                console.log('this.props.state.length'+this.props.state.length)
                 data.number = this.props.state.length+1 //序号
                 data.status = ['正常', '禁用'] //状态
-                this.props.actions(
+                // this.props.actions()调用的是action里的函数 addToUser(data:any) 里面只有一个data参数
+                this.props.actions.addToUser(    
+                  data   
                   // type:'add_user',
-                   data     
                 )
               }
             })
@@ -103,7 +103,13 @@ class User extends Component<any,any> {
 
       }
 
-    
+      //删除数据
+      removeData(key:any){
+        console.log('key'+key)
+        this.props.actions.removeUser(key-1)
+      }
+
+
     render() {
 
         //定义表格
@@ -147,16 +153,28 @@ class User extends Component<any,any> {
                     } */}
                 </span>
             )
-        },{
+          },{
             title:'操作',
             dataIndex:'operate',
-            render:() => {
-                return <a href="#" style={{color:'#000000a6'}}>
-                <span className="iconfont icon-property"></span>
-                </a>
-            }
-        }];
+            render:(text:any,record:any) => {
+              // return <button onClick={() => {this.removeData(record.number)}}>删除</button>
+              return <Dropdown key={record.number} overlay={menu(record.number)} style={{color:'#000000a6'}} placement="bottomLeft">
+                        <span className="iconfont icon-property"></span>
+                    </Dropdown>
+               /*   <a href="#" style={{color:'#000000a6'}}>
+                      <span className="iconfont icon-property"></span>
+                 </a> */
+             }
+         }];
       
+         const menu = (number:any) => (
+            <Menu>
+                <Menu.Item>
+                   <a target="#" rel="noopener noreferrer" onClick={() => {this.removeData(number)}}>删 除</a>
+                </Menu.Item>
+            </Menu>
+         )
+
      return (     
         <div className="o-home-content">
             <div className='top'>  
@@ -190,7 +208,7 @@ class User extends Component<any,any> {
               </div>
             <div className='clear'></div>
             <div className="down">
-              <Table columns={columns} dataSource={this.props.state} />
+              <Table rowKey = {record => record.number} columns={columns} dataSource={this.props.state} />
             </div>
         </div>
       );
@@ -203,7 +221,7 @@ function mapStateToProps(state:any) {
 }
 
 function mapDispatchToProps(dispatch:any,) {
-  return {actions:bindActionCreators(addToUser.addToUser,dispatch)} 
+  return {actions:bindActionCreators(addToUser,dispatch)} 
 }
 
 

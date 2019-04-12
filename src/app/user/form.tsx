@@ -10,11 +10,11 @@ class Forms extends Component<ReactProps,any>{
     constructor(props:any){
         super(props)
         this.state = {
-          time:'',
+         
         }
     }
 
-    //密码
+    // 密码
     validateToNextPassword = (rule:any, value:any, callback:any) => {
         const form = this.props.form;
         if (value && this.state.confirmDirty) {
@@ -23,7 +23,7 @@ class Forms extends Component<ReactProps,any>{
         callback();
      }
 
-     //验证密码
+     // 验证密码
      compareToFirstPassword = (rule:any, value:any, callback:any) => {
         const form = this.props.form;
         if (value && value !== form.getFieldValue('password')) {
@@ -39,20 +39,15 @@ class Forms extends Component<ReactProps,any>{
         this.setState({ confirmDirty: this.state.confirmDirty || !!value });
     }
      
-      // 阻止提交事件
+    // 阻止提交事件
     handleSubmit = (e:any) => {
         e.preventDefault();
       
     }
+
+    // 时间发生变化的回调
     onChange = (value:any,dataString:any) => {
-      this.setState({
-        time:dataString  
-      },() =>{
-        // console.log('this.state.time'+this.state.time)
-        this.props.getTime(this.state.time)
-      })
-      
-     
+      this.props.getTime(dataString)
        console.log('v'+value)
        console.log('s'+dataString)  
     }
@@ -71,11 +66,11 @@ class Forms extends Component<ReactProps,any>{
           };
 
         const tailFormItemLayout = {
-            labelCol: {
+            labelCol: {  //同<Col>组价
               xs: { span: 6 },
               sm: { span: 6 },
             },
-            wrapperCol: {
+            wrapperCol: {  
               xs: {
                 span: 16,
                 offset: 0,
