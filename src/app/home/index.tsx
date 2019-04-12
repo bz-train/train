@@ -19,8 +19,12 @@ const routes: any[] = [
     {
         path: '/home/role',
         lazyComponent: './role/index',
+    },
+    {
+        path: '/home/addRole',
+        lazyComponent: './addrole/index',
     }
-]
+];
 
 export default class Home extends Component<any,any> {
     constructor(props:any) {
@@ -39,7 +43,12 @@ export default class Home extends Component<any,any> {
                     children:[{
                         title:'角色管理',
                         key:'/home/role'
-                }]
+                    },
+                        {
+                            title:'新增角色',
+                            key:'/home/addRole'
+                        }
+                    ]
             }]
         }
     }

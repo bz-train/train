@@ -7,11 +7,7 @@ function onChange(date:any, dateString:any) {
 }
 function handleChange(value:any){
     console.log(`selected ${value}`);
-    this.props.form.validateFieldsAndScroll((err:any, values:any) => {
-        if (!err) {
-            console.log('Received values of form: ', values);
-        }
-    });
+
 }
 
 function handleBlur() {
@@ -57,19 +53,19 @@ class Head extends React.Component<ReactProps,any> {
                 <Form.Item
                     label="角色编码"
                 >
-                    {getFieldDecorator('rnumber', {
+                    {getFieldDecorator('rNumber', {
                         rules: [{
                             required: true, message: '不能为空',
                         }],
                     })(
-                        <Input placeholder="请输入角色业务编码"/>
+                        <Input placeholder="请输入角色业务编码" />
                     )}
                 </Form.Item>
 
                 <Form.Item
                     label="角色名称"
                 >
-                    {getFieldDecorator('rname', {
+                    {getFieldDecorator('rName', {
                         rules: [{
                             required: true, message: '不能为空',
                         }],
@@ -81,10 +77,8 @@ class Head extends React.Component<ReactProps,any> {
                 <Form.Item
                     label="角色类型"
                 >
-                    {getFieldDecorator('rtype', {
-                        rules: [{
-                            required: true, message: '不能为空',
-                        }],
+                    {getFieldDecorator('rType', {
+
                     })(
                         <Select
                             showSearch
@@ -104,12 +98,10 @@ class Head extends React.Component<ReactProps,any> {
                 <Form.Item
                     label="是否系统角色"
                 >
-                    {getFieldDecorator('yorn', {
-                        rules: [{
-                            required: true, message: '不能为空',
-                        }],
+                    {getFieldDecorator('yonSys', {
                     })(
                         <Select
+
                             showSearch
                             optionFilterProp="children"
                             onChange={handleChange}
@@ -129,18 +121,24 @@ class Head extends React.Component<ReactProps,any> {
                     {getFieldDecorator('msg', {
                         rules: [{
                             required: true, message: '不能为空',
-                        },
-                        ],
+                        }],
                     })(
-                        <Input placeholder="请填写角色信息说明"/>
+                        <Input
+
+                            placeholder="请填写角色信息说明"/>
                     )}
                 </Form.Item>
 
                 <Form.Item
                     label="创建时间"
                 >
-                    <DatePicker onChange={onChange} style={{ width: 315 }}
-                                placeholder="请选择创建时间"/>
+                    {getFieldDecorator('createTime',{
+
+                        })(
+                            <DatePicker onChange={onChange}
+                                        style={{width:315}}
+                                        placeholder="请选择创建时间"/>
+                        )}
                 </Form.Item>
 
             </Form>

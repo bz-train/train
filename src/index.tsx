@@ -7,6 +7,7 @@ import App from './app/index'
 import './assert/fonts/iconfont.css'
 import './assert/styles.css'
 import './index.scss'
+
 ReactDOM.render(
     <App />,
     document.getElementById("app")

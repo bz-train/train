@@ -30,15 +30,15 @@ class Content extends Component<any,any> {
         this.setState({
             name:obj.name
         })
-    }
+    };
 
     componentDidMount() {
         this.WrapList.addList();
-    }
+    };
 
     changeHead = () => {
         this.props.actions.addContent('you are very smart');
-    }
+    };
 
     render() {
         return (
