@@ -5,6 +5,7 @@ import * as React from "react"
 import { Component } from "react"
 import { Menu, Icon, Button } from 'antd';
 import {renderRoutes} from "../router";
+import demo from '../demo';
 
 import './index.scss'
 
@@ -23,6 +24,10 @@ const routes: any[] = [
     {
         path: '/home/scopeControl',
         lazyComponent: './scopeControl/index',
+    },
+    {
+        path: '/home/demo',
+        lazyComponent: './demo/index',
     }
 ]
 
@@ -40,13 +45,18 @@ export default class Home extends Component<any,any> {
                     key:'sub3',
                     title:'权限管理',
                     icon: 'inbox',
-                    children:[{
+                    children:[
+                        {
                         title:'角色管理',
                         key:'/home/role'
-                    },
+                        },
                         {
                             title:'权限菜单',
                             key:'/home/scopeControl'
+                        },
+                        {
+                            title:'demo表格',
+                            key:'/home/demo'
                         }
                     ]
             }]
