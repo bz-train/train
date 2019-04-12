@@ -17,14 +17,10 @@ export function addToRole(title:any){
 }
 
 //添加到user里面 action
-/* account,
-confirm,
-telnumber,
-time */
-export const adduser = 'add_user'
+export const ADD_USER = 'ADD_USER'
 export function addToUser(data:any){
     return {
-        type: adduser,
+        type: ADD_USER,
         data
     }
 }

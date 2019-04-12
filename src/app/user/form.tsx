@@ -6,7 +6,6 @@ interface ReactProps{
     form?:any
 }
 
-
 class Forms extends Component<ReactProps,any>{
     constructor(props:any){
         super(props)
@@ -14,7 +13,6 @@ class Forms extends Component<ReactProps,any>{
           time:'',
         }
     }
-
 
     //密码
     validateToNextPassword = (rule:any, value:any, callback:any) => {
@@ -88,59 +86,57 @@ class Forms extends Component<ReactProps,any>{
               },
             },
           };
-        return (
-        
+        return (  
             <Form {...tailFormItemLayout} onSubmit={this.handleSubmit}>
-                    <Form.Item label="用户姓名："
-                        >
-                        {getFieldDecorator('username')(
-                            <Input placeholder="请输入用户姓名"/>
-                        )}
-                    
-                    </Form.Item>
-                    <Form.Item label="账户名称：">
-                        {getFieldDecorator('account')(
-                              <Input placeholder="请输入账户名称"/>
-                        )}
-                    
-                    </Form.Item>
-                    <Form.Item label="初始密码：">
-                        {getFieldDecorator('password', {
-                            rules: [{
-                            required: true, message: '请输入你的密码!',
-                            }, {
-                            validator: this.validateToNextPassword,
-                            }],
-                        })(
-                            <Input type="password" placeholder="请输入密码"/>
-                        )}
+                <Form.Item label="用户姓名：">
+                    {getFieldDecorator('username')(
+                        <Input placeholder="请输入用户姓名"/>
+                    )}
+                
+                </Form.Item>
+                <Form.Item label="账户名称：">
+                    {getFieldDecorator('account')(
+                          <Input placeholder="请输入账户名称"/>
+                    )}
+                
+                </Form.Item>
+                <Form.Item label="初始密码：">
+                    {getFieldDecorator('password', {
+                        rules: [{
+                        required: true, message: '请输入你的密码!',
+                        }, {
+                        validator: this.validateToNextPassword,
+                        }],
+                    })(
+                        <Input type="password" placeholder="请输入密码"/>
+                    )}
 
-                    </Form.Item>
-                    <Form.Item label="再次输入：">
-                        {getFieldDecorator('confirm', {
-                            rules: [{
-                            required: true, message: '请再次输入你的密码!',
-                            }, {
-                            validator: this.compareToFirstPassword,
-                            }],
-                        })(
-                            <Input type="password" placeholder="请再次输入密码" onBlur={this.handleConfirmBlur}  />
-                        )}
-                        
-                    </Form.Item>
-                    <Form.Item label="手机号码：">
-                        {getFieldDecorator('telnumber', {
-                            rules: [{ required: true, message: '请输入你的电话号码!' }],
-                        })(
-                            <Input type='number' placeholder="请输入手机号码" style={{ width: '100%' }} />
-                        )}
-                        
-                    </Form.Item>
-                    <Form.Item label="入职时间：">
-                        {getFieldDecorator('time', config)(
-                            <DatePicker  onChange={this.onChange} format='YYYY/MM/DD' style={{width:'314px'}} placeholder="请选择入职时间"/>
-                        )}
-                    </Form.Item>
+                </Form.Item>
+                <Form.Item label="再次输入：">
+                    {getFieldDecorator('confirm', {
+                        rules: [{
+                        required: true, message: '请再次输入你的密码!',
+                        }, {
+                        validator: this.compareToFirstPassword,
+                        }],
+                    })(
+                        <Input type="password" placeholder="请再次输入密码" onBlur={this.handleConfirmBlur}  />
+                    )}
+                    
+                </Form.Item>
+                <Form.Item label="手机号码：">
+                    {getFieldDecorator('telnumber', {
+                        rules: [{ required: true, message: '请输入你的电话号码!' }],
+                    })(
+                        <Input type='number' placeholder="请输入手机号码" style={{ width: '100%' }} />
+                    )}
+                    
+                </Form.Item>
+                <Form.Item label="入职时间：">
+                    {getFieldDecorator('time', config)(
+                        <DatePicker  onChange={this.onChange} format='YYYY/MM/DD' style={{width:'314px'}} placeholder="请选择入职时间"/>
+                    )}
+                </Form.Item>
             </Form>
         )
     }

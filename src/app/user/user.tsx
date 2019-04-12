@@ -17,7 +17,6 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 
 
-
 class User extends Component<any,any> {
     constructor(props:any){
         super(props);
@@ -26,8 +25,8 @@ class User extends Component<any,any> {
             visible: false,
             check:true,
             confirmLoading: false,
-            array:this.props.state
-            formTime:'',
+            array:[],
+            formTime:'',    
         }
     }
      
@@ -59,17 +58,29 @@ class User extends Component<any,any> {
         forms.validateFields((err:any, values:any) => {
 
           console.log('this.state.formTime'+this.state.formTime)
-          if(!err && this.state.formTime!=''){ //&& this.state.formTime!=''
+          if(!err){ //&& this.state.formTime!=''
             console.log(values);//这里可以拿到数据
-            this.props.actions(values.account,values.confirm,values.telnumber,this.state.formTime)
-            var userx = this.props.state
-           for(var key in userx){
-             console.log('this.props.state'+userx[key])
-           }
-           
-           /*  for(var key in userx){
-              console.log('this.props.state'+userx[key])
-            }  */   
+            let data = values; 
+            data.time = '2019/03/23'  //入职时间
+            data.lastLogintime = '2019/3/27' //最后登录时间
+            data.creatTime = this.state.formTime; //创建时间
+            data.number = 2 //序号
+            data.status = ['正常', '禁用'] //状态
+
+            this.props.actions(
+              // type:'add_user',
+              data     
+              )
+             console.log('this.props.state'+typeof this.props.state)
+         
+            var userx = JSON.stringify(this.props.state)
+            console.log('userx'+userx)
+            this.setState({
+              array:this.state.array.concat(this.props.state)
+            },
+            function () {
+              console.log('array'+JSON.stringify(this.state.array))
+            })
           }
         })
 
@@ -104,10 +115,10 @@ class User extends Component<any,any> {
 
       }
 
+    
     render() {
      
-      // console.log('this.state.formTime'+this.state.formTime)
-      // console.log('p----'+this.props.state.account)
+      console.log('this.props.state'+JSON.stringify(this.props.state))
 
         //定义表格
         const columns = [{
@@ -136,21 +147,18 @@ class User extends Component<any,any> {
             dataIndex:'status',
             render:(tags:any)=>(
                 <span>
-                    {
-                        tags.map( (tag:any) => {
-                            if(tag === '正常'){
-                                return <Button style={{width:'60px',marginRight:'10px'}}>正常</Button>
-                            }
-                            else{
-                                return  <a href="#"><span style={{color:'blue'}} key={tag}>禁用</span></a>
-                            }
-                          /* let color = tag.length > 5 ? 'geekblue' : 'green';
-                          if (tag === 'loser') {
-                            color = 'volcano';
+                  <Button style={{width:'60px',marginRight:'10px'}}>正常</Button>
+                  <a href="#"><span style={{color:'blue'}}>禁用</span></a>
+                    {/* {
+                      tags.map( (tag:any) => {
+                          if(tag === '正常'){
+                              return <Button style={{width:'60px',marginRight:'10px'}}>正常</Button>
                           }
-                          return <Tag color={color} key={tag}>{tag.toUpperCase()}</Tag>; */
-                        })
-                    }
+                          else{
+                              return  <a href="#"><span style={{color:'blue'}} key={tag}>禁用</span></a>
+                          }
+                      })
+                    } */}
                 </span>
             )
         },{
@@ -162,82 +170,49 @@ class User extends Component<any,any> {
                 </a>
             }
         }];
-     
-        const data = [{
-          number: 1,
-          username: 'maojie', 
-          account:'maojie',
-          telnumber:18384125163,
-          time:'2019/03/27',
-          lastLogintime:'2019/03/27',
-          creatTime:'2019/03/27',
-          status:['正常', '禁用'],
-          operate:'12'
-        }];
-
-        const data1 = [
-          {
-            // key: '1',
-            number: 2,
-            username: this.props.state.account, 
-            account:this.props.state.confirm,
-            telnumber:this.props.state.telnumber,
-            time:this.props.state.time,
-            lastLogintime:'2019/03/27',
-            creatTime:'2019/03/27',
-            status:['正常', '禁用'],
-            operate:'12'         
-        }]
-      const data2 = data.concat(data1)
       
-      
-        return (     
-            <div className="o-home-content">
-               <div className='top'>  
-
-                  <label htmlFor="username">人员姓名：</label> <Input id='username' className='inputs' size="large" placeholder="请输入人员姓名" /> 
-                  <label htmlFor="name">账户名称：</label> <Input id='name' className='inputs' size="large" placeholder="请输入账户名称" /> 
-                  <div className='centers'>
-                  
-                      <label htmlFor="select" className='labels'>账户状态：</label>        
-                          <Select id='select' className='selects' defaultValue="全部">
-                            <Option value="全部">全部</Option>
-                            <Option value="Option1">Option1</Option>
-                            <Option value="Option2">Option2</Option>
-                          </Select>   
-                  </div>    
-               </div>
-               <div className='right'>
-
-                    <Button className='searchs' type="primary"><Icon type="search" />搜索</Button> 
-                    <Button type="primary"  className='addnew' onClick={this.showModal} ghost> 
-                        <Icon type="plus" />新增
-                    </Button>
-                     
-                    <Modal
-                        title="新增"
-                        visible={this.state.visible}
-                        confirmLoading={this.state.confirmLoading}
-                        onOk={this.handleOk}
-                        onCancel={this.handleCancel}
-                        okText="确认"
-                        cancelText="取消"
-                        >
-                        <FormNow ref="getFormValue" getTime={this.fn.bind(this)}/>
-
-                    </Modal>
-                 </div>
-                <div className='clear'></div>
-               <div className="down">
-                  <Table columns={columns} dataSource={data2} />
-               </div>
+     return (     
+        <div className="o-home-content">
+            <div className='top'>  
+                <label htmlFor="username">人员姓名：</label> <Input id='username' className='inputs' size="large" placeholder="请输入人员姓名" /> 
+                <label htmlFor="name">账户名称：</label> <Input id='name' className='inputs' size="large" placeholder="请输入账户名称" /> 
+                <div className='centers'>
+                    <label htmlFor="select" className='labels'>账户状态：</label>        
+                    <Select id='select' className='selects' defaultValue="全部">
+                      <Option value="全部">全部</Option>
+                      <Option value="Option1">Option1</Option>
+                      <Option value="Option2">Option2</Option>
+                    </Select>   
+                </div>    
             </div>
-        );
+            <div className='right'>
+                <Button className='searchs' type="primary"><Icon type="search" />搜索</Button> 
+                <Button type="primary"  className='addnew' onClick={this.showModal} ghost> 
+                    <Icon type="plus" />新增
+                </Button>         
+                <Modal
+                    title="新增"
+                    visible={this.state.visible}
+                    confirmLoading={this.state.confirmLoading}
+                    onOk={this.handleOk}
+                    onCancel={this.handleCancel}
+                    okText="确认"
+                    cancelText="取消"
+                    >
+                    <FormNow ref="getFormValue" getTime={this.fn.bind(this)}/>
+                </Modal>
+              </div>
+            <div className='clear'></div>
+            <div className="down">
+              <Table columns={columns} dataSource={this.props.state} />
+            </div>
+        </div>
+      );
     }
 }
 function mapStateToProps(state:any) {
     return {
-      state:state.userx
+      state: state.userx.data
     }
 }
 
