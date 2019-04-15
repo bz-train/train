@@ -6,7 +6,7 @@ function Content(state = {}, action:any) {
         case ADD_CONNENT:
             return Object.assign({}, state, {
                 content: action.content
-            })
+            });
         default:
             return state
     }

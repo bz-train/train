@@ -2,9 +2,7 @@ import React from 'react'
 import {Form, Input,DatePicker, Select,} from 'antd';
 const Option = Select.Option;
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
-function onChange(date:any, dateString:any) {
-    console.log(date, dateString);
-}
+
 function handleChange(value:any){
     console.log(`selected ${value}`);
 
@@ -25,12 +23,16 @@ class Head extends React.Component<ReactProps,any> {
         super(props);
         this.state = {
             confirmDirty: false,
-            //       autoCompleteResult:[],
         }
     };
 
     handleSubmit = (e:any) => {
         e.preventDefault();
+    };
+
+     onChange=(date:any, dateString:any) =>{
+        console.log(date, dateString);
+        this.props.getTime(dateString);
     };
 
     render() {
@@ -53,7 +55,7 @@ class Head extends React.Component<ReactProps,any> {
                 <Form.Item
                     label="角色编码"
                 >
-                    {getFieldDecorator('rNumber', {
+                    {getFieldDecorator('key', {
                         rules: [{
                             required: true, message: '不能为空',
                         }],
@@ -135,7 +137,8 @@ class Head extends React.Component<ReactProps,any> {
                     {getFieldDecorator('createTime',{
 
                         })(
-                            <DatePicker onChange={onChange}
+                            <DatePicker onChange={this.onChange}
+                                        format='YYYY/MM/DD'
                                         style={{width:315}}
                                         placeholder="请选择创建时间"/>
                         )}

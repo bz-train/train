@@ -1,34 +1,34 @@
-import { ADD_ADDROLE } from '../action/addrole'
+import { ADD_ADDROLE,USE_FORBID,USE_ALLOW } from '../action/addrole'
 
 
 const initState = {
     data : [{
         key: '1',
-        rNumber: '1',
         rName: 'John Brown',
         rType: '',
         rTypeName: '',
         createTime: '2019/03/26',
         yonSys: '是',
         operate: '',
+        status:false
     }, {
         key: '2',
-        rNumber: '2',
         rName: 'Jim Green',
         rType: '',
         rTypeName: '',
         createTime: '2019/03/26',
         yonSys: '是',
         operate: '',
+        status:true
     }, {
         key: '3',
-        rNumber: '3',
         rName: 'Joe Black',
         rType: '',
         rTypeName: '',
         createTime: '2019/03/26',
         yonSys: '是',
         operate: '',
+        status:true
     },
     ]
 };
@@ -36,15 +36,37 @@ const initState = {
 //添加内容列表
 function Content(state = initState, action:any) {
     switch (action.type) {
-        case ADD_ADDROLE:{
+        //新增功能
+        case ADD_ADDROLE: {
             const newState = JSON.parse(JSON.stringify(state));
             newState.data.push(action.value);
-           // console.log(newState.data);
+            // console.log(newState.data);
             return Object.assign({}, state, {
                 data: newState.data
+            });
         }
+        //禁止功能
+        case USE_FORBID:{
+            const newState=JSON.parse(JSON.stringify(state));
+            newState.data[action.status].status = false;
+            console.log(newState.data);
+            return Object.assign({}, state, {
+                data: newState.data
+            });
+
+        }
+        //正常功能
+        case USE_ALLOW:{
+            const newState=JSON.parse(JSON.stringify(state));
+            newState.data[action.status].status = true;
+            console.log(newState.data);
+            return Object.assign({}, state, {
+                data: newState.data
+            });
+        }
+
         default:
-            return state;
+            return state
     }
 }
 

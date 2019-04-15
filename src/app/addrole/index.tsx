@@ -8,7 +8,10 @@ import * as addAddRole from "../../model/action/addrole";
 class AddRole extends Component<any,any> {
     constructor(props: any) {
         super(props);
-        this.state = {visible: false, loading: false,}
+        this.state = {
+            visible: false,
+            loading: false,
+            createTime:''}
     }
 
     showModal = () => {
@@ -17,17 +20,22 @@ class AddRole extends Component<any,any> {
         });
     };
     handleOk = () => {
+        //获取modal输入的值
         let head = this.refs.head;
         head.validateFields((err:any,value:any) => {
             if (!err) {
-                this.props.actions.addAddRole(value);
+                //将子组件传来的创建时间加到获取到的form表单输入值
+                let newData = value;
+                newData.createTime=this.state.createTime;
+                //派发action
+                this.props.actions.addAddRole(newData);
                 this.setState({
-                    visible:false
-                })
+                    visible:false,
+                });
+
+
             }
         });
-
-
         this.setState({
             loading: true
         });
@@ -42,13 +50,35 @@ class AddRole extends Component<any,any> {
             visible: false,
         });
     };
+    //获取子组件传来的dtaString并存入creatTime
+    getTime=(dateString:any)=>{
+        console.log(dateString);
+        this.setState({
+            createTime:dateString
+        })
+    };
+
+    handleAllow=(text:any,record:any,index:any)=>{
+        console.log(text,record,index);
+        this.props.actions.allowData(index);
+    };
+    handleForbid=(index:any)=>{
+        // console.log('aaaaaaa'+index);
+        //派发下标给action
+        this.props.actions.forbidData(index);
+    };
+    forbidColor=(record: any)=>{
+        //console.log(record);
+        //动态设置显示className
+      return record.status === false ? 'forbidColor': '';
+    };
 
     render() {
         const  columns=[
             {
                 title: '序号',
-                dataIndex: 'rNumber',
-                key: 'rNumber',
+                dataIndex: 'key',
+                key: 'key',
 
             },
                 {
@@ -77,11 +107,11 @@ class AddRole extends Component<any,any> {
             }, {
                 title: '状态',
                 key: 'tempState',
-                render: () => (
+                render: (text:any,record:any,index:any) => (
                 <span>
-                <a href="javascript:;"><Button className="zhuangtai">正常</Button></a>
+                <a href="javascript:;"><Button className="zhuangtai" onClick={this.handleAllow.bind(this,text,record,index)}>正常</Button></a>
                 <Divider type="vertical"/>
-                <a href="javascript:;" className="zhuangtai01">禁用</a>
+                <a href="javascript:;" className="zhuangtai01"  onClick={this.handleForbid.bind(this,index)}>禁用</a>
                 </span>
                 ),
             },
@@ -97,6 +127,8 @@ class AddRole extends Component<any,any> {
                 <Button className="adressButton" type="primary" onClick={this.showModal}>+ 新增</Button>
                 <Table columns={columns}
                        dataSource={this.props.data}
+                       //设置行的类名
+                       rowClassName={this.forbidColor}
                 />
                 <Modal
                     visible={this.state.visible}
@@ -104,14 +136,18 @@ class AddRole extends Component<any,any> {
                     onCancel={this.handleCancel}
                     footer={[
                         <Button key="back" onClick={this.handleCancel}>取消</Button>,
-                        <Button key="submit" type="primary" loading={this.state.loading} onClick={this.handleOk}>
+                        <Button
+                            key="submit"
+                            type="primary"
+                            loading={this.state.loading}
+                            onClick={this.handleOk}>
                             创建
                         </Button>,
 
                     ]}
 
                 >
-                    <Head ref="head" />
+                    <Head ref="head" getTime={this.getTime}/>
                 </Modal>
 
             </div>
