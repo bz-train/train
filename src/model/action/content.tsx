@@ -34,4 +34,35 @@ export function removeUser(index:any){
     }
 }
 
+//禁用功能
+export const DISABLE_USER = 'DISABLE_USER'
+export function disableUser(disable:any) {
+    return {
+        type:DISABLE_USER,
+        disable
+    }
+}
+
+//正常(不禁用)功能
+export const ABLE_USER = 'ABLE_USER'
+export function ableUser(disable:any) {
+    return {
+        type:ABLE_USER,
+        disable
+    }
+}
+
+//搜索功能
+export const SEARCH_USER = 'SEARCH_USER'
+export function searchUser(username:any,name:any,select:any){
+    return {
+        type : SEARCH_USER,
+        username,
+        name,
+        select
+    }
+}
+
+
+
 

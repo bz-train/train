@@ -42,5 +42,3 @@ function mapDispatchToProps(dispatch:any, ownProps:any) {
 
 //app 里使用了Provider组件,要想使用state中的数据，必须在要用state的组件中使用connect()
 export default connect(mapStateToProps, mapDispatchToProps)(Role)
-
-

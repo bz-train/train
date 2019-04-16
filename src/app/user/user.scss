@@ -3,7 +3,7 @@
     padding: 0px;
     margin: 10px;
     .top{
-        width: 65%;
+        width: 60%;
         height: auto;
         margin: 0px;
         float: left;
@@ -54,6 +54,11 @@
      .down{
          
          margin-top:40px;
+         .table{
+            background-color: gray;
+         }
      }
  }
- 
+ /* .table{
+    background-color: red;
+} */

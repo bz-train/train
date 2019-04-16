@@ -42,7 +42,6 @@ class Forms extends Component<ReactProps,any>{
     // 阻止提交事件
     handleSubmit = (e:any) => {
         e.preventDefault();
-      
     }
 
     // 时间发生变化的回调

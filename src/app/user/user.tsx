@@ -9,7 +9,7 @@ import {Form, Input,Select, Icon, message,Modal,
 import FormNow from './form'
 import './user.scss'
 import {connect} from 'react-redux'
-import * as addToUser from "../../model/action/content";
+import * as addToUser from "../../model/action/content"
 import {bindActionCreators} from 'redux'
 
 
@@ -25,8 +25,11 @@ class User extends Component<any,any> {
             visible: false,
             check:true,
             confirmLoading: false,
-            array:[],
-            formTime:'',    
+           
+            formTime:'', 
+            username:'',
+            name:'',
+            select:''
         }
     }
      
@@ -41,10 +44,11 @@ class User extends Component<any,any> {
       
     }
 
-     handleButtonClick(e:any) {
+   /*   handleButtonClick(e:any) {
         message.info('Click on left button.');
         console.log('click left button', e);
-      }
+      } */
+
       //model
       showModal = () => {
         this.setState({
@@ -52,6 +56,7 @@ class User extends Component<any,any> {
         });
       }
 
+      //model点击确认按钮
       handleOk = () => {
             console.log('modal 点击了ok事件')
             let forms = this.refs.getFormValue
@@ -65,7 +70,8 @@ class User extends Component<any,any> {
                 data.lastLogintime = '2019/3/27' //最后登录时间
                 data.creatTime = this.state.formTime; //创建时间
                 data.number = this.props.state.length+1 //序号
-                data.status = ['正常', '禁用'] //状态
+                data.status = '正常' //状态
+                data.disable = true
                 // this.props.actions()调用的是action里的函数 addToUser(data:any) 里面只有一个data参数
                 this.props.actions.addToUser(    
                   data   
@@ -109,6 +115,51 @@ class User extends Component<any,any> {
         this.props.actions.removeUser(key-1)
       }
 
+      //表格禁用功能
+      disAbleTable = (index: any) => {      
+        this.props.actions.disableUser(index)
+      }
+
+      //表格不禁用功能
+      ableTable = (index:any) => {
+        this.props.actions.ableUser(index)
+      }
+
+      //设置表格行的className
+      className = (record:any) => {
+          console.log(record.disable)
+          return record.disable === false ? 'table':''
+      }
+
+      //获取input框username的值
+      UserValue = (e:any) => {
+        console.log('e'+e.target.value)
+        this.setState({
+          username:e.target.value
+        })
+      }
+
+      //获取input框name的值
+      NameValue = (e:any) => {
+        console.log('e'+e.target.value)
+        this.setState({
+          name:e.target.value
+        })
+      }
+
+       //获取select框的值
+       SelectValue = (e:any) => {
+        console.log('e'+e)
+        this.setState({
+          select:e
+        })
+      }
+      //搜索功能
+      Search = () => {    
+        console.log('1')
+        //提交到redux里
+        this.props.actions.searchUser(this.state.username,this.state.name,this.state.select)
+      }
 
     render() {
 
@@ -137,33 +188,19 @@ class User extends Component<any,any> {
         },{
             title:'状态',
             dataIndex:'status',
-            render:(tags:any)=>(
+            render:(tags:any,record:any,index:any)=>(
                 <span>
-                  <Button style={{width:'60px',marginRight:'10px'}}>正常</Button>
-                  <a href="#"><span style={{color:'blue'}}>禁用</span></a>
-                    {/* {
-                      tags.map( (tag:any) => {
-                          if(tag === '正常'){
-                              return <Button style={{width:'60px',marginRight:'10px'}}>正常</Button>
-                          }
-                          else{
-                              return  <a href="#"><span style={{color:'blue'}} key={tag}>禁用</span></a>
-                          }
-                      })
-                    } */}
+                  <Button onClick = {this.ableTable.bind(this,index)} style={{width:'60px',marginRight:'10px'}}>正常</Button>
+                  <a href="#" onClick = {this.disAbleTable.bind(this,index)}><span style={{color:'blue'}}>禁用</span></a>
                 </span>
             )
           },{
             title:'操作',
             dataIndex:'operate',
             render:(text:any,record:any) => {
-              // return <button onClick={() => {this.removeData(record.number)}}>删除</button>
               return <Dropdown key={record.number} overlay={menu(record.number)} style={{color:'#000000a6'}} placement="bottomLeft">
                         <span className="iconfont icon-property"></span>
                     </Dropdown>
-               /*   <a href="#" style={{color:'#000000a6'}}>
-                      <span className="iconfont icon-property"></span>
-                 </a> */
              }
          }];
       
@@ -178,19 +215,19 @@ class User extends Component<any,any> {
      return (     
         <div className="o-home-content">
             <div className='top'>  
-                <label htmlFor="username">人员姓名：</label> <Input id='username' className='inputs' size="large" placeholder="请输入人员姓名" /> 
-                <label htmlFor="name">账户名称：</label> <Input id='name' className='inputs' size="large" placeholder="请输入账户名称" /> 
+                <label htmlFor="username">人员姓名：</label> <Input onChange={(e:any) => {this.UserValue(e)}} id='username' className='inputs' size="large" placeholder="请输入人员姓名" /> 
+                <label htmlFor="name">账户名称：</label> <Input onChange={(e:any) => {this.NameValue(e)}} ref='name' id='name' className='inputs' size="large" placeholder="请输入账户名称" /> 
                 <div className='centers'>
-                    <label htmlFor="select" className='labels'>账户状态：</label>        
-                    <Select id='select' className='selects' defaultValue="全部">
+                    <label htmlFor="select"  className='labels'>账户状态：</label>        
+                    <Select onChange={this.SelectValue} id='select' className='selects' ref='select' defaultValue="全部">
                       <Option value="全部">全部</Option>
-                      <Option value="Option1">Option1</Option>
-                      <Option value="Option2">Option2</Option>
+                      <Option value="正常">正常</Option>
+                      <Option value="禁用">禁用</Option>
                     </Select>   
                 </div>    
             </div>
             <div className='right'>
-                <Button className='searchs' type="primary"><Icon type="search" />搜索</Button> 
+                <Button className='searchs' type="primary" onClick = {this.Search.bind(this)}><Icon type="search"/>搜索</Button> 
                 <Button type="primary"  className='addnew' onClick={this.showModal} ghost> 
                     <Icon type="plus" />新增
                 </Button>         
@@ -208,7 +245,7 @@ class User extends Component<any,any> {
               </div>
             <div className='clear'></div>
             <div className="down">
-              <Table rowKey = {record => record.number} columns={columns} dataSource={this.props.state} />
+              <Table ref='table' rowKey = {record => record.number} columns={columns} rowClassName={this.className} dataSource={this.props.state} />
             </div>
         </div>
       );
