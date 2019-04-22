@@ -24,12 +24,11 @@ class User extends Component<any,any> {
         this.state={
             visible: false,
             check:true,
-            confirmLoading: false,
-           
+            confirmLoading: false,       
             formTime:'', 
             username:'',
             name:'',
-            select:''
+            select:'',
         }
     }
      
@@ -59,11 +58,14 @@ class User extends Component<any,any> {
       //model点击确认按钮
       handleOk = () => {
             console.log('modal 点击了ok事件')
+            this.setState({
+              visible:false
+            })
             let forms = this.refs.getFormValue
             forms.validateFields((err:any, values:any) => {
 
               console.log('this.state.formTime'+this.state.formTime)
-              if(!err){ //&& this.state.formTime!=''
+              if(!err){ 
                 console.log(values);//这里可以拿到数据
                 let data = values; 
                 data.time = '2019/03/23'  //入职时间
@@ -156,7 +158,6 @@ class User extends Component<any,any> {
       }
       //搜索功能
       Search = () => {    
-        console.log('1')
         //提交到redux里
         this.props.actions.searchUser(this.state.username,this.state.name,this.state.select)
       }
@@ -230,8 +231,10 @@ class User extends Component<any,any> {
                 <Button className='searchs' type="primary" onClick = {this.Search.bind(this)}><Icon type="search"/>搜索</Button> 
                 <Button type="primary"  className='addnew' onClick={this.showModal} ghost> 
                     <Icon type="plus" />新增
-                </Button>         
-                <Modal
+                </Button>
+                {
+                  this.state.visible? 
+                  <Modal
                     title="新增"
                     visible={this.state.visible}
                     confirmLoading={this.state.confirmLoading}
@@ -241,7 +244,9 @@ class User extends Component<any,any> {
                     cancelText="取消"
                     >
                     <FormNow ref="getFormValue" getTime={this.fn.bind(this)}/>
-                </Modal>
+                  </Modal> : ''
+                }         
+                
               </div>
             <div className='clear'></div>
             <div className="down">

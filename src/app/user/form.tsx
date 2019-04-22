@@ -65,7 +65,7 @@ class Forms extends Component<ReactProps,any>{
           };
 
         const tailFormItemLayout = {
-            labelCol: {  //同<Col>组价
+            labelCol: {  //同<Col>等价
               xs: { span: 6 },
               sm: { span: 6 },
             },
@@ -90,7 +90,7 @@ class Forms extends Component<ReactProps,any>{
                 </Form.Item>
                 <Form.Item label="账户名称：">
                     {getFieldDecorator('account')(
-                          <Input placeholder="请输入账户名称"/>
+                        <Input placeholder="请输入账户名称"/>
                     )}
                 
                 </Form.Item>
@@ -122,7 +122,7 @@ class Forms extends Component<ReactProps,any>{
                     {getFieldDecorator('telnumber', {
                         rules: [{ required: true, message: '请输入你的电话号码!' }],
                     })(
-                        <Input type='number' placeholder="请输入手机号码" style={{ width: '100%' }} />
+                        <Input placeholder="请输入手机号码" style={{ width: '100%' }} />
                     )}
                     
                 </Form.Item>

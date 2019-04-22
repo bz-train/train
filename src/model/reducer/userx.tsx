@@ -1,4 +1,5 @@
-import {ADD_USER,REMOVE_USER,DISABLE_USER,ABLE_USER,SEARCH_USER} from '../action/content'
+import {ADD_USER,REMOVE_USER,DISABLE_USER,ABLE_USER,SEARCH_USER} from '../action/content';
+import { message } from 'antd';
 
 const tabelData:any = {
     data: [{
@@ -61,27 +62,26 @@ function ContentUser(state:any=tabelData,action:any) {
             let newState = JSON.parse(JSON.stringify(state)) //深拷贝一个对象
             let username = action.username;
             let name = action.name;
-            let states = [];
             let select = action.select;
-            for(var i =0;i<newState.data.length;i++){
-                console.log('indexof'+newState.data[i].username.indexOf(username))
-                //&& name!=''&& select!=''  && newState.data[i].name.indexOf(name)!= -1  && newState.data[i].select.indexOf(select)!= -1
-                if(username.trim() !='' && newState.data[i].username.indexOf(username) != -1){
-                    console.log('搜索成功')
-                    // newState.data[i].disable = false;
-                    states.push(newState.data[i])
-                }
-                else if(name.trim() != '' && newState.data[i].account.indexOf(name) != -1){
+            let states = [];
+            for(var i=0;i<newState.data.length;i++){
+                let usernames = newState.data[i].username.indexOf(username);
+                let names = newState.data[i].account.indexOf(name);
+                let selects = newState.data[i].status.indexOf(select);
+                if(username.trim() !='' && usernames != -1){
                     console.log('搜索成功')
                     states.push(newState.data[i])
                 }
-                else if(select.trim() != '' && newState.data[i].status.indexOf(select) != -1){
+                else if(name.trim() != '' && names != -1){
+                    console.log('搜索成功')
+                    states.push(newState.data[i])
+                }
+                else if(select.trim() != '' && selects != -1){
                     console.log('搜索成功')
                     states.push(newState.data[i])
                 }
                 else{
-                    console.log('搜索失败')
-                    newState.data[i].disable = true;
+                    console.log('搜索失败')              
                 }
             }
            
