@@ -1,7 +1,6 @@
 import React from 'react'
 import {Form, Input,DatePicker, Select,} from 'antd';
 const Option = Select.Option;
-const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 
 function handleChange(value:any){
     console.log(`selected ${value}`);
@@ -16,8 +15,10 @@ function handleFocus() {
 }
 interface ReactProps {
     form?:any;
+    getTime?:any;
+    handleOk?:any;
 }
-class Head extends React.Component<ReactProps,any> {
+class Head extends React.Component<ReactProps,{}> {
     constructor(props:any){
 
         super(props);
@@ -33,6 +34,12 @@ class Head extends React.Component<ReactProps,any> {
      onChange=(date:any, dateString:any) =>{
         console.log(date, dateString);
         this.props.getTime(dateString);
+    };
+    getKeyValue=(e:any)=>{
+      console.log(e.keyCode);
+      if(e.keyCode==13){
+          this.props.handleOk();
+      }
     };
 
     render() {
@@ -51,7 +58,7 @@ class Head extends React.Component<ReactProps,any> {
         };
 
         return (
-            <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+            <Form {...formItemLayout} onSubmit={this.handleSubmit} onKeyUp={this.getKeyValue}>
                 <Form.Item
                     label="角色编码"
                 >

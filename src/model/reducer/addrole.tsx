@@ -1,4 +1,4 @@
-import { ADD_ADDROLE,USE_FORBID,USE_ALLOW } from '../action/addrole'
+import { ADD_ADDROLE,USE_FORBID,USE_ALLOW,DEL_ROWDATA } from '../action/addrole'
 
 
 const initState = {
@@ -48,7 +48,7 @@ function Content(state = initState, action:any) {
         //禁止功能
         case USE_FORBID:{
             const newState=JSON.parse(JSON.stringify(state));
-            newState.data[action.status].status = false;
+            newState.data[action.index].status = false;
             console.log(newState.data);
             return Object.assign({}, state, {
                 data: newState.data
@@ -58,11 +58,19 @@ function Content(state = initState, action:any) {
         //正常功能
         case USE_ALLOW:{
             const newState=JSON.parse(JSON.stringify(state));
-            newState.data[action.status].status = true;
+            newState.data[action.index].status = true;
             console.log(newState.data);
             return Object.assign({}, state, {
                 data: newState.data
             });
+        }
+        //删除功能
+        case DEL_ROWDATA: {
+            const newState = JSON.parse(JSON.stringify(state));
+            newState.data.splice(action.index,1);
+            return Object.assign({}, state, {
+                data: newState.data
+            })
         }
 
         default:

@@ -1,10 +1,12 @@
 import React,{Component} from "react"
-import {Table, Divider,Modal,Button,} from 'antd'
+import {Table, Divider,Modal,Button,Icon} from 'antd'
 import Head from './head'
 import '../content/index.scss'
 import {connect} from "react-redux";
 import { bindActionCreators } from 'redux'
 import * as addAddRole from "../../model/action/addrole";
+
+
 class AddRole extends Component<any,any> {
     constructor(props: any) {
         super(props);
@@ -72,6 +74,9 @@ class AddRole extends Component<any,any> {
         //动态设置显示className
       return record.status === false ? 'forbidColor': '';
     };
+    handleRowData=(index:any)=>{
+        this.props.actions.delRowData(index);
+    };
 
     render() {
         const  columns=[
@@ -119,6 +124,12 @@ class AddRole extends Component<any,any> {
                     title: '操作',
                     dataIndex: 'operate',
                     key: 'operate',
+                    render:(text:any, record:any, index:any)=>(
+                        <span className="delColor" onClick={this.handleRowData.bind(this,index)}>
+                            <Icon type="delete" />
+                            <i>删除</i>
+                        </span>
+                    )
                 },];
 
 
@@ -147,7 +158,7 @@ class AddRole extends Component<any,any> {
                     ]}
 
                 >
-                    <Head ref="head" getTime={this.getTime}/>
+                    <Head ref="head" getTime={this.getTime} handleOk={this.handleOk}/>
                 </Modal>
 
             </div>

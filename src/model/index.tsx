@@ -4,9 +4,9 @@ import {createLogger} from "redux-logger";
 import createBrowserHistory from "history/createBrowserHistory";
 import reducer from "./reducer/index";
 
-const loggerMiddleware = createLogger()
+const loggerMiddleware = createLogger();
 const history = createBrowserHistory();
-const middleware = routerMiddleware(history)
+const middleware = routerMiddleware(history);
 
 const store = createStore(
     reducer,
