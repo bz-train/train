@@ -33,7 +33,7 @@ class User extends Component<any,any> {
     }
      
     //子组件向父组件传值
-    fn =(data:any)=>{
+    fn = (data:any) => {
       this.setState({
          //formTime属性改为从子组件传过来的值
          formTime:data  
@@ -42,11 +42,6 @@ class User extends Component<any,any> {
        })
       
     }
-
-   /*   handleButtonClick(e:any) {
-        message.info('Click on left button.');
-        console.log('click left button', e);
-      } */
 
       //model
       showModal = () => {
@@ -99,7 +94,7 @@ class User extends Component<any,any> {
           visible: false,
         });
       }
-
+/* 
       checkChange(){
           if(this.refs.psd != this.refs.psd2){
             alert(<Alert message="密码不一致" type="error" />)
@@ -109,10 +104,10 @@ class User extends Component<any,any> {
               console.log('密码相同')
           }
 
-      }
+      } */
 
       //删除数据
-      removeData(key:any){
+      removeData = (key:any) => {
         console.log('key'+key)
         this.props.actions.removeUser(key-1)
       }
@@ -208,7 +203,7 @@ class User extends Component<any,any> {
          const menu = (number:any) => (
             <Menu>
                 <Menu.Item>
-                   <a target="#" rel="noopener noreferrer" onClick={() => {this.removeData(number)}}>删 除</a>
+                   <a target="#" rel="noopener noreferrer" onClick={this.removeData.bind(this,number)}>删 除</a>
                 </Menu.Item>
             </Menu>
          )

@@ -69,7 +69,7 @@ class Login extends Component<any,any> {
                                 />
                             )}
                         </FormItem>
-                        <FormItem{...formItemLayout}>
+                        <FormItem {...formItemLayout}>
                             <button type="submit" >登录</button>
                         </FormItem>
                         <div className="login-reg" onClick={this.register}>注册</div>

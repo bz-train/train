@@ -97,7 +97,8 @@ class Forms extends Component<ReactProps,any>{
                 <Form.Item label="初始密码：">
                     {getFieldDecorator('password', {
                         rules: [{
-                        required: true, message: '请输入你的密码!',
+                             required: true,
+                             message: '请输入你的密码!',
                         }, {
                         validator: this.validateToNextPassword,
                         }],
@@ -109,9 +110,10 @@ class Forms extends Component<ReactProps,any>{
                 <Form.Item label="再次输入：">
                     {getFieldDecorator('confirm', {
                         rules: [{
-                        required: true, message: '请再次输入你的密码!',
-                        }, {
-                        validator: this.compareToFirstPassword,
+                             required: true, 
+                             message: '请再次输入你的密码!',
+                         }, {
+                             validator: this.compareToFirstPassword,
                         }],
                     })(
                         <Input type="password" placeholder="请再次输入密码" onBlur={this.handleConfirmBlur}  />
@@ -120,7 +122,10 @@ class Forms extends Component<ReactProps,any>{
                 </Form.Item>
                 <Form.Item label="手机号码：">
                     {getFieldDecorator('telnumber', {
-                        rules: [{ required: true, message: '请输入你的电话号码!' }],
+                        rules: [{
+                             required: true, 
+                             message: '请输入你的电话号码!' 
+                        }],
                     })(
                         <Input placeholder="请输入手机号码" style={{ width: '100%' }} />
                     )}
