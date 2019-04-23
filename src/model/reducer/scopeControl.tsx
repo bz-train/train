@@ -1,6 +1,12 @@
-import { DEL_TABLE_DATA, ADD_FORM_DATA, EDIT_TABLE_DATA, SERACH_TABLE_DATA } from '../action/scopeControl';
-import { Icon, Button} from 'antd';
-import React from 'react'
+import {
+    DEL_TABLE_DATA,
+    ADD_FORM_DATA,
+    EDIT_TABLE_DATA,
+    SERACH_TABLE_DATA,
+    LIMIT_TABLE_DATA,
+    NORMAL_TABLE_DATA } from '../action/scopeControl';
+import React from 'react';
+import { message } from "antd";
 
 const tableData = {
     data: [
@@ -12,6 +18,7 @@ const tableData = {
             createTime: '2019/04/03',
             changeTime: '2019/04/03',
             funRemark: '首页',
+            status: true
         },
         {
             key: 2,
@@ -21,6 +28,7 @@ const tableData = {
             createTime: '2019/04/03',
             changeTime: '2019/04/03',
             funRemark: '用户与授权',
+            status: true
         },
         {
             key: 3,
@@ -30,6 +38,7 @@ const tableData = {
             createTime: '2019/04/03',
             changeTime: '2019/04/03',
             funRemark: '功能与角色',
+            status: true
         },
         {
             key: 4,
@@ -39,6 +48,7 @@ const tableData = {
             createTime: '2019/04/03',
             changeTime: '2019/04/03',
             funRemark: '表单模板管理',
+            status: true
         },
         {
             key: 5,
@@ -48,10 +58,11 @@ const tableData = {
             createTime: '2019/04/03',
             changeTime: '2019/04/03',
             funRemark: '表单实例管理',
+            status: true
         },
     ],
     newData: []
-}
+};
 
 //添加内容列表
 function scopeControl(state = tableData, action:any) {
@@ -86,14 +97,40 @@ function scopeControl(state = tableData, action:any) {
         case SERACH_TABLE_DATA: {
             let newState = JSON.parse(JSON.stringify(state));
             let copyData = newState; // 拷贝一份
+            let i = 0;
+            if (i > 0 ) {
+                console.log(11)
+            }
+            i++;
             newState.newData = [];
             for (let i = 0; i < copyData.data.length; i++) {
                     if (copyData.data[i].funRemark.indexOf(action.data) > -1) {
                         newState.newData.push(copyData.data[i])
                     }
                 }
+                if (action.data === '') {
+                    message.warning('请输入搜索数据',2);
+                    return;
+                } else {
+                    return Object.assign({}, state, {
+                        data: newState.newData
+                    })
+                }
+        }
+        // 禁用
+        case LIMIT_TABLE_DATA: {
+            let newState = JSON.parse(JSON.stringify(state));
+            newState.data[action.index].status = false;
             return Object.assign({}, state, {
-                data: newState.newData
+                data: newState.data
+            })
+        }
+        // 取消禁用 -- 正常
+        case NORMAL_TABLE_DATA: {
+            let newState = JSON.parse(JSON.stringify(state));
+            newState.data[action.index].status = true;
+            return Object.assign({}, state, {
+                data: newState.data
             })
         }
         default:

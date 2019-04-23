@@ -35,3 +35,21 @@ export const searchData = (data: any) => {
         data
     }
 };
+
+// 禁用
+export const LIMIT_TABLE_DATA = 'LIMIT_TABLE_DATA';
+export const limitData = (index: any) => {
+    return {
+        type: LIMIT_TABLE_DATA,
+        index
+    }
+};
+
+// 取消禁用 -- 正常
+export const NORMAL_TABLE_DATA = 'NORMAL_TABLE_DATA';
+export const normalData = (index: any) => {
+    return {
+        type: NORMAL_TABLE_DATA,
+        index
+    }
+};

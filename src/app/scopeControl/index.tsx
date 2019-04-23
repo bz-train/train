@@ -2,7 +2,8 @@
  * Created by chenlei on 2018/7/12.
  */
 import React,{Component} from "react";
-import { Button, Input, Table, Badge, Menu, Dropdown, Icon, Modal, Form,InputNumber,Popconfirm } from 'antd'
+import { Button, Input, Table, Badge, Menu, message,
+    Dropdown, Icon, Modal, Form,InputNumber,Popconfirm } from 'antd'
 import './index.scss';
 import AddFun from './addFun';
  import { connect } from 'react-redux';
@@ -11,7 +12,7 @@ import * as scopeActions from "../../model/action/scopeControl";
 
 
 const FormItem = Form.Item;
-const EditableContext = React.createContext();
+const EditableContext = React.createContext();  // 不懂的地方1
 
 class EditableCell extends React.Component {
     getInput = () => {
@@ -92,11 +93,11 @@ class scopeControl extends Component<any,any> {
                     title: '功能状态',
                     dataIndex: 'funState',
                     key: 'funState',
-                    render: () => {
+                    render: (text:any, record:any, index:any) => {
                         return (
                             <span>
-                                <Button>正常</Button>
-                                <a className="Unuse" href="javascript:;">禁用</a>
+                                <Button onClick={this.handleNormal.bind(this,text,record,index)}>正常</Button>
+                                <a className="Unuse" href="javascript:;" onClick={this.limitUse.bind(this,text,record,index)}>禁用</a>
                             </span>
                         )
                     }
@@ -140,7 +141,7 @@ class scopeControl extends Component<any,any> {
                                         (
                                             <span>
                                                 <Icon type="edit" style={{color: '#1890ff'}}/>
-                                                <a disabled={editingKey !== ''} onClick={() => this.edit(record.key)}>编辑</a>
+                                                <a disabled={editingKey !== ''} onClick={() => this.edit(record.key,record.status)}>编辑</a>
                                                 <a href="javascript:;">+新增子级功能</a>
                                                 <Icon type="delete" style={{color: 'red'}}/><a href="javascript:;" data-index={index} onClick={this.delCol.bind(this,index)} style={{color: "red"}}>删除</a>
                                             </span>
@@ -152,6 +153,7 @@ class scopeControl extends Component<any,any> {
                     }
                 },
             ]
+            
         }
     }
 
@@ -161,8 +163,8 @@ class scopeControl extends Component<any,any> {
     cancel = () => {
         this.setState({ editingKey: '' });
     };
-
-    save = (form:any, key:any) => { // 确认保存
+    // 确认保存
+    save = (form:any, key:any) => {
         form.validateFields((error:any, row:any) => {
             if (error) {
                 return;
@@ -185,9 +187,13 @@ class scopeControl extends Component<any,any> {
         });
     }
 
-    edit = (key:any) => {
-        this.setState({ editingKey: key });
-    }
+    edit = (key:any,status:boolean) => {
+        if (status === false) {
+            message.warning('不能编辑，禁用中')
+        } else {
+            this.setState({ editingKey: key });
+        }
+    };
 
 // ============函数分界线=====================================
     // 弹出框的函数
@@ -206,6 +212,7 @@ class scopeControl extends Component<any,any> {
                 formData.createTime = '2019/04/03';
                 formData.changeTime = '2019/04/03';
                 formData.funRemark = '权限管理';
+                formData.status = true;
                 formData.key = this.props.data.length+1;
                 this.props.actions.addData(formData);
                 // 关闭
@@ -284,27 +291,37 @@ class scopeControl extends Component<any,any> {
         this.setState({
             inputValue: e.target.value
         })
-    }
+    };
     // 搜索
     search = () => {
         let inputValue = this.state.inputValue;
         this.props.actions.searchData(inputValue);
-        // let dataList = [...this.props.data];
-        // let inputValue = this.state.inputValue;
-        // let newData = [];
-        // console.log(inputValue);
-        // for (let i = 0; i < dataList.length; i++) {
-        //     if (dataList[i].funRemark.indexOf(inputValue) > -1) {
-        //         newData.push(dataList[i])
-        //     }
-        // }
-        // this.props.actions.searchData(newData);
         this.setState({
             inputValue: ''
         })
     };
 
+    // 禁用
+    limitUse = (text:any,record:any,index:any) => {
+        // console.log(text)  undefined
+        // console.log(record) // 对象数据
+        // console.log(index) // 索引值 0
+        this.props.actions.limitData(index)
+        // console.log(this.props.data)
+    };
+    // 取消禁用--正常
+    handleNormal = (text:any,record:any,index:any) => {
+        this.props.actions.normalData(index)
+    }
+
+    // 显示是否被禁用 -- 默认展示
+    rowClassName = (record: any) => {
+        return record.status === false ? 'limitUse': ''
+    };
+
+
     render() {
+        // 定义常量 不会修改
         const components = {
             body: {
                 cell: EditableCell,
@@ -347,9 +364,10 @@ class scopeControl extends Component<any,any> {
                                 rowKey={record => record.key}
                                 dataSource={this.props.data}
                                 columns={columns}
-                                rowClassName="editable-row"
+                                rowClassName={this.rowClassName}
                                 // pagination={{
                                 //     onChange: this.cancel,
+                                //     pageSize: 3
                                 // }}
                             />
                         </EditableContext.Provider>
