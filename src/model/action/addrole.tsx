@@ -20,7 +20,7 @@ export const USE_ALLOW = 'USE_ALLOW';
 export const allowData = (index:any)=>{
     return{
         type:USE_ALLOW,
-        status
+        index
     }
 };
 //删除功能
