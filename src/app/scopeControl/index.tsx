@@ -9,10 +9,11 @@ import AddFun from './addFun';
  import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import * as scopeActions from "../../model/action/scopeControl";
+import NewChildFun from './addChild/index';
 
 
 const FormItem = Form.Item;
-const EditableContext = React.createContext();  // 不懂的地方1
+const EditableContext = React.createContext();
 
 class EditableCell extends React.Component {
     getInput = () => {
@@ -55,6 +56,7 @@ class scopeControl extends Component<any,any> {
         super(props);
         this.state = {
             visible: false,
+            show: false,
             loading: false,
             editingKey: '',
             inputValue: '',
@@ -142,7 +144,7 @@ class scopeControl extends Component<any,any> {
                                             <span>
                                                 <Icon type="edit" style={{color: '#1890ff'}}/>
                                                 <a disabled={editingKey !== ''} onClick={() => this.edit(record.key,record.status)}>编辑</a>
-                                                <a href="javascript:;">+新增子级功能</a>
+                                                <a href="javascript:;" onClick={this.addChild}>+新增子级功能</a>
                                                 <Icon type="delete" style={{color: 'red'}}/><a href="javascript:;" data-index={index} onClick={this.delCol.bind(this,index)} style={{color: "red"}}>删除</a>
                                             </span>
                                         )
@@ -152,12 +154,85 @@ class scopeControl extends Component<any,any> {
                             )
                     }
                 },
-            ]
-            
+            ],
+            childData: [
+                {
+                    key: 1,
+                    date: '2014-12-24 23:12:00',
+                    name: 'This is production name',
+                    upgradeNum: 'Upgraded: 56',
+                }
+            ],
+            childColumns: [ // 展开列数据
+                { title: 'Date', dataIndex: 'date', key: 'date' },
+                { title: 'Name', dataIndex: 'name', key: 'name' },
+                { title: 'Status', key: 'state', render: () => <span><Badge status="success" />Finished</span> },
+                { title: 'Upgrade Status', dataIndex: 'upgradeNum', key: 'upgradeNum' },
+                {
+                    title: 'Action',
+                    dataIndex: 'operation',
+                    key: 'operation',
+                    render: () => (
+                        <span className="table-operation">
+            <a href="javascript:;">Pause</a>
+            <a href="javascript:;">Stop</a>
+            <Dropdown overlay={this.state.menu}>
+              <a href="javascript:;">
+                More <Icon type="down" />
+              </a>
+            </Dropdown>
+          </span>
+                    ),
+                },
+            ],
+            menu: (
+                <Menu>
+                    <Menu.Item>
+                        Action 1
+                    </Menu.Item>
+                    <Menu.Item>
+                        Action 2
+                    </Menu.Item>
+                </Menu>
+            )
         }
     }
+    // 新增子级功能
+    addChild = () => {
+        this.setState({
+            show: true
+        })
+    };
+    handleChildOk = () => {
+        this.setState({
+            show: false
+        });
+        let form = this.refs.chidlForm;
+        form.validateFields((err: any, value: any) => {
+            if (!err) {
+                let childName = {};
+                childName.title = value.name;
+                childName.dataIndex = value.name;
+                childName.key = value.name;
 
+                let values = value.name;
 
+                let childData = this.state.childData[0][values] = value.value;
+                let childColumns = this.state.childColumns.push(childName);
+                this.setState({
+                    show: false,
+                    childColumns,
+                    childData
+                });
+                console.log(this.state.childColumns)
+            }
+        })
+    };
+    handleChildCancel = () => {
+        this.setState({
+            show: false
+        })
+    };
     isEditing = (record:any) => record.key === this.state.editingKey;
 
     cancel = () => {
@@ -235,53 +310,11 @@ class scopeControl extends Component<any,any> {
     };
     // // 额外的展开行函数
     expandedRowRender = () => {
-        let menu = (
-            <Menu>
-                <Menu.Item>
-                    Action 1
-                </Menu.Item>
-                <Menu.Item>
-                    Action 2
-                </Menu.Item>
-            </Menu>
-        );
-        const columns = [ // 展开列数据
-            { title: 'Date', dataIndex: 'date', key: 'date' },
-            { title: 'Name', dataIndex: 'name', key: 'name' },
-            { title: 'Status', key: 'state', render: () => <span><Badge status="success" />Finished</span> },
-            { title: 'Upgrade Status', dataIndex: 'upgradeNum', key: 'upgradeNum' },
-            {
-                title: 'Action',
-                dataIndex: 'operation',
-                key: 'operation',
-                render: () => (
-                    <span className="table-operation">
-            <a href="javascript:;">Pause</a>
-            <a href="javascript:;">Stop</a>
-            <Dropdown overlay={menu}>
-              <a href="javascript:;">
-                More <Icon type="down" />
-              </a>
-            </Dropdown>
-          </span>
-                ),
-            },
-        ];
-
-        const data = [];
-        for (let i = 0; i < 2; ++i) {
-            data.push({
-                key: i,
-                date: '2014-12-24 23:12:00',
-                name: 'This is production name',
-                upgradeNum: 'Upgraded: 56',
-            });
-        }
         return (
             <Table
-                columns={ columns }
-                dataSource={ data }
-                pagination={ false }
+                columns={ this.state.childColumns }
+                dataSource={ this.state.childData }
+                // pagination={ false }
             />
         );
 
@@ -403,6 +436,27 @@ class scopeControl extends Component<any,any> {
                                     {/*// 嵌入表单组件*/}
                                     <AddFun ref="form"/>
                                 </Modal>: ""}
+                        </div>
+                        <div>
+                            {this.state.show ?
+                                <Modal
+                                    title="新增子级功能节点"
+                                    visible={this.state.show}
+                                    onCancel={this.handleChildCancel}
+                                    footer={[
+                                        <div style={{textAlign: 'center'}}>
+                                            <Button key="back" onClick={this.handleChildCancel}>取消</Button>,
+                                            <Button key="submit" type="primary" onClick={this.handleChildOk}>
+                                                新增
+                                            </Button>
+                                        </div>
+                                    ]}
+                                >
+                                    <NewChildFun
+                                        ref="chidlForm"
+                                    />
+                                </Modal>: ""
+                            }
                         </div>
                     </div>
                 </div>
